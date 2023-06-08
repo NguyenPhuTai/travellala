@@ -49,8 +49,8 @@
                 <h1>Đặng ký thành viên Travellala</h1>
 
                 <div class="form-group">
-                    <label for="">label</label>
-                    <input type="text" class="form-control" id="" placeholder="Input field">
+                    <label for="">Email</label>
+                    <input type="email" class="form-control" id="" placeholder="Input field">
                 </div>
 
 
