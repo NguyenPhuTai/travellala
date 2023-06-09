@@ -19,6 +19,8 @@
         }
         body{
             font-family:  Godwit,MuseoSans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+            font-weight: 550;
+            font-size: 16px;
         }
         .container{
             display: flex;
@@ -46,7 +48,8 @@
             justify-content: space-between;
         }
         .banner{
-            flex: 50%;
+            flex:0 45%;
+            margin: 1%;
         }
         .icon{
             max-width: 70px;
@@ -66,6 +69,7 @@
                 <div class="banner">
                     <img src="icon/icon-phone.png" alt="" class="icon">
                     <h3>Nhận thưởng cho mỗi lần đặt vé</h3>
+                    <p>Tích điểm cho mỗi đặt vé máy bay và phòng khách sạn. Quy đổi để du lịch tiết kiệm hơn! </p>
                 </div>
                 <div class="banner">
                 <img src="icon/icon-convenient.png" alt="" class="icon">
@@ -73,11 +77,11 @@
                 </div>
                 <div class="banner">
                 <img src="icon/icon-pay.png" alt="" class="icon">
-                    <h3>Thanh toán không cần thẻ với travelokaPay</h3>
+                    <h3>Thanh toán không cần thẻ với travelalaPay</h3>
                 </div>
                 <div class="banner">
                 <img src="icon/icon-adventure.png" alt="" class="icon">
-                    <h3>Trải nghiệm đặt chỗ suôn sẻ</h3>
+                    <h3>Trải nghiệm đặt vé suôn sẻ</h3>
                 </div>
             </div>
         </div>
@@ -87,19 +91,19 @@
 
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="email" class="form-control" id="" placeholder="Email">
+                    <input type="email" class="form-control" id="" placeholder="Email" required>
                 </div>
                 <div class="form-group">
                     <label for="">Phone Number</label>
-                    <input type="number" class="form-control" id="" placeholder="Phone" >
+                    <input type="tel" class="form-control" id="" placeholder="Phone" checked>
                 </div>
                 <div class="form-group">
                     <label for="">Username</label>
-                    <input type="text" class="form-control" id="" placeholder="Username">
+                    <input type="text" class="form-control" id="" placeholder="Username" required>
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input type="password" class="form-control" id="" placeholder="Password">
+                    <input type="password" class="form-control" id="" placeholder="Password" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Đặng ký</button>
