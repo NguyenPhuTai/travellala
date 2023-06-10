@@ -13,8 +13,109 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="style.css">
     <link rel="short icon" href="photo/logo3.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        h1{
+            font-size: 24px;
+            font-weight: 700;
+        }
+        h3{
+            font-size: 20px;
+            font-weight: 700;
+        }
+        body{
+            font-family:  Godwit,MuseoSans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+            font-weight: 550;
+            font-size: 16px;
+        }
+        .footer-bs {
+            background-color: #3c3d41;
+            padding: 60px 40px;
+            color: rgba(255,255,255,1.00);
+            margin-bottom: 0px;
+            margin-top: 10%;
+            border-top-left-radius: 0px;
+            
+        }
+        .footer-bs .footer-brand, .footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns {
+            padding:10px 25px; 
+        }
+        .footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns { 
+            border-color: transparent;
+        }
+        .footer-bs .footer-brand h2 { 
+            margin:0px 0px 10px; 
+        }
+        .footer-bs .footer-brand p { 
+            font-size:12px; color:rgba(255,255,255,0.70); 
+        }
+
+        .footer-bs .footer-nav ul.pages { 
+            list-style:none; padding:0px; 
+        }
+        .footer-bs .footer-nav ul.pages li { 
+            padding:5px 0px;
+        }
+        .footer-bs .footer-nav ul.pages a { 
+            color:rgba(255,255,255,1.00); font-weight:bold; text-transform:uppercase; 
+        }
+        .footer-bs .footer-nav ul.pages a:hover { 
+            color:rgba(255,255,255,0.80); text-decoration:none; 
+        }
+        .footer-bs .footer-nav h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom:10px;
+        }
+
+        .footer-bs .footer-nav ul.list { 
+            list-style:none; padding:0px; 
+        }
+        .footer-bs .footer-nav ul.list li { 
+            padding:5px 0px;
+        }
+        .footer-bs .footer-nav ul.list a { 
+            color:rgba(255,255,255,0.80); 
+        }
+        .footer-bs .footer-nav ul.list a:hover { 
+            color:rgba(255,255,255,0.60); text-decoration:none; 
+        }
+
+        .footer-bs .footer-social ul { 
+            list-style:none; padding:0px; 
+        }
+        .footer-bs .footer-social h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .footer-bs .footer-social li { 
+            padding:5px 4px;
+        }
+        .footer-bs .footer-social a { 
+            color:rgba(255,255,255,1.00);
+        }
+        .footer-bs .footer-social a:hover { 
+            color:rgba(255,255,255,0.80); text-decoration:none; 
+        }
+
+        .footer-bs .footer-ns h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom:10px;
+        }
+        .footer-bs .footer-ns p { 
+            font-size:12px; color:rgba(255,255,255,0.70); 
+        }
+
+        @media (min-width: 768px) {
+            .footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns { border-left:solid 1px rgba(255,255,255,0.10); }
+        }
+    </style>
+    
 </head>
 <body>
     <nav class="navbar navbar-default " role="navigation">
@@ -101,5 +202,3 @@
     
 
     
-</body>
-</html>
