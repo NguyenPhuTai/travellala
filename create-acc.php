@@ -28,12 +28,11 @@
             justify-content: space-between;
         }
         .left-body{
-            flex: 5% 30%;
-
+            flex:0 30%;
 
         }
         .right-body{
-            flex: 60%;
+            flex:0 60%;
             display: flex;
             flex-direction: column;
 
