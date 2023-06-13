@@ -7,7 +7,6 @@
         $phone = $_POST['phone'];
         $password = md5($_POST['password']);
         $result=mysqli_query($conn,"INSERT INTO `customer` (`id_customer`, `name_customer`, `number_customer`, `email`, `password`) VALUES (NULL, '$name', '$phone', '$email', '$password')");
-        echo $name;
     }
 ?>
 <!DOCTYPE html>
@@ -121,7 +120,7 @@
                     <input type="password" class="form-control" id="" placeholder="Password" name="password" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary" name="submit">Đặng ký</button>
+                <button type="submit" class="btn btn-primary" name="submit">Đăng ký</button>
             </form>
         </div>
     </div>

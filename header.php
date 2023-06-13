@@ -155,9 +155,9 @@
                     <button type="submit" class="btn btn-default"></button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <a href="create-acc.php"><p class="navbar-text">Đặng kí ?</p></a>
+                    <a href="create-acc.php"><p class="navbar-text">Đăng kí ?</p></a>
                     <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Đặng nhập</b> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Đăng nhập</b> <span class="caret"></span></a>
                         <ul id="login-dp" class="dropdown-menu">
                             <li>
                                 <div class="row">
