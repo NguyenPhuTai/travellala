@@ -7,6 +7,7 @@
         $phone = $_POST['phone'];
         $password = md5($_POST['password']);
         $result=mysqli_query($conn,"INSERT INTO `customer` (`id_customer`, `name_customer`, `number_customer`, `email`, `password`) VALUES (NULL, '$name', '$phone', '$email', '$password')");
+        echo $name;
     }
 ?>
 <!DOCTYPE html>
