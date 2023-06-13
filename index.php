@@ -16,7 +16,7 @@
     <div class="carousel-inner">
 
       <div class="item active">
-        <img src="photo/logo2.jpg" alt="Los Angeles" style="width:100%;">
+        <img src="photo/los.webp" alt="Los Angeles" style="width:100%;">
         <div class="carousel-caption">
           <h3>Los Angeles</h3>
           <p>LA is always so much fun!</p>
@@ -24,7 +24,7 @@
       </div>
 
       <div class="item">
-        <img src="photo/logo2.jpg" alt="Chicago" style="width:100%;">
+        <img src="photo/chicago.jpg" alt="Chicago" style="width:100%;">
         <div class="carousel-caption">
           <h3>Chicago</h3>
           <p>Thank you, Chicago!</p>
@@ -32,7 +32,7 @@
       </div>
     
       <div class="item">
-        <img src="ny.jpg" alt="New York" style="width:100%;">
+        <img src="photo/newyork.jpg" alt="New York" style="width:100%;">
         <div class="carousel-caption">
           <h3>New York</h3>
           <p>We love the Big Apple!</p>
