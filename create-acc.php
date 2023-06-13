@@ -1,5 +1,13 @@
 <?php
     include_once('header.php');
+    require_once('config.php');
+    if(isset($_POST['submit'])){
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $password = md5($_POST['password']);
+        $result=mysqli_query($conn,"INSERT INTO `customer` (`id_customer`, `name_customer`, `number_customer`, `email`, `password`) VALUES (NULL, '$name', '$phone', '$email', '$password')");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,14 +113,14 @@
                 </div>
                 <div class="form-group">
                     <label for="">Username</label>
-                    <input type="text" class="form-control" id="" placeholder="Username" name="nane" required>
+                    <input type="text" class="form-control" id="" placeholder="Username" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
                     <input type="password" class="form-control" id="" placeholder="Password" name="password" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Đặng ký</button>
+                <button type="submit" class="btn btn-primary" name="submit">Đặng ký</button>
             </form>
         </div>
     </div>

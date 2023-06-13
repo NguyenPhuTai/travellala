@@ -1,5 +1,6 @@
 <?php
     include_once('header.php');
+    require_once('config.php');
 ?>
 <div class="container">
   <h2>Carousel Example</h2>
