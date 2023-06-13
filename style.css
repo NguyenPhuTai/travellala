@@ -1,3 +1,21 @@
+.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.nav.navbar-nav{
+    display:flex ;
+    flex-wrap: nowrap;
+    margin-top: 1%;
+}
+.icon-default{
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+}
+.avatar{
+    padding-top: 14px;
+}
 
 .navbar{
     background-color: #fff;

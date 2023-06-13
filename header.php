@@ -148,14 +148,13 @@
                     </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default"></button>
-                </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <a href="create-acc.php"><p class="navbar-text">Đăng kí ?</p></a>
+                    <div class="avatar">
+                        <img src="icon/avatar-default.jpg" alt="" class="icon-default">
+                    </div>
+                    <a href="create-acc.php">
+                        <p class="navbar-text">Đăng kí ?</p>
+                    </a>
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Đăng nhập</b> <span class="caret"></span></a>
                         <ul id="login-dp" class="dropdown-menu">
