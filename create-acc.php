@@ -120,7 +120,7 @@
                     <input type="password" class="form-control" id="" placeholder="Password" name="password" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary" name="submit">Đặng ký</button>
+                <button type="submit" class="btn btn-primary" name="submit">Đăng ký</button>
             </form>
         </div>
     </div>
