@@ -174,8 +174,22 @@ $num = mysqli_num_rows($result);
                         </ul>
                     </li>
                 </ul>
-                
-                   
+                <?php
+                    if(isset($_POST['signin'])){
+                        if($_SESSION['email']==$email){ ?> 
+                            <ul class="nav navbar-nav navbar-right">
+                            <div class="avatar">
+                              <img src="icon/avatar-default.jpg" alt="" class="icon-default">
+                            </div>
+                            <a href="create-acc.php">
+                             <p class="navbar-text"> <?php  echo $_SESSION["name"] ?> </p>
+                            </a>
+                    
+                    
+                    
+                    
+                    <?php }  ?> 
+                <?php if(!isset($_POST['signin'])) { ?>    
                 <ul class="nav navbar-nav navbar-right">
                     <div class="avatar">
                         <img src="icon/avatar-default.jpg" alt="" class="icon-default">
@@ -225,7 +239,7 @@ $num = mysqli_num_rows($result);
                             </li>
                         </ul>   
                     </li>
-                   
+                    <?php }} ?>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
