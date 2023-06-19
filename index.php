@@ -159,7 +159,7 @@
       <div class="select-item">
         <div>Ngày đi</div>
         <div>
-          <input type="date" name="" id="" class="date">
+          <input type="date" name="" id="" class="date" getdate>
         </div>
       </div>
       <div class="select-item">
