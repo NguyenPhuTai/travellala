@@ -1,6 +1,11 @@
 <?php
     include_once('header.php');
     require_once('config.php');
+    $result=mysqli_query($conn,"SELECT * FROM `airport` WHERE 1");
+    $display_class = mysqli_query($conn,"SELECT * FROM `class` WHERE 1");
+    if(isset($_GET['submit'])){
+      $round_trip=$_GET['round-trip'];
+    }
 ?>
 <style>
   .main-box{
@@ -68,32 +73,41 @@
       <div class="select-item">
         <div>từ</div>
         <div>
-        <select name="" class="form-control" id="input" required="required">
-          <option value="" ></option>
-        </select>
+          <select name="" class="form-control" id="input" required="required">
+            <?php foreach ($result as $key) { ?>
+            <option value="<?php echo $key['id_airport'] ?>" ><?php echo $key['name_airport']; ?></option>
+            <?php } ?>
+          </select>
         </div>
       </div>
       <div class="select-item">
         <div>đến</div>
         <div>
           <select name="" id="input" class="form-control" required="required">
-            <option value=""></option>
+            <?php foreach ($result as $key) { ?>
+            <option value="<?php echo $key['id_airport'] ?>" ><?php echo $key['name_airport']; ?></option>
+            <?php } ?>
           </select>
         </div>
       </div>
       <div class="select-item">
         <div>Số hành khách</div>
         <div>
-          <select name="" id="input" class="form-control" required="required">
-            <div></div>
+          <select name="" id="input" class="form-control" >
+            <option value="" checked>Người lớn </option>
+            <option value="">Trẻ em </option>
           </select>
         </div>
       </div>
       <div class="select-item">
         <div>Hạng ghế</div>
         <div>
-          <select name="" id="input" class="form-control" required="required">
-            <div></div>
+          <select name="class" id="input" class="form-control"  required="required">
+            <div>
+              <?php foreach ($display_class as $key) { ?>
+              <option value="<?php echo $key['id_class'] ?>" class="class"><?php echo $key['name_class']; ?></option>
+              <?php } ?>
+            </div>
           </select>
         </div>
       </div>
@@ -104,14 +118,22 @@
         </div>
       </div>
       <div class="select-item">
-        <div>Ngày khứ hồi</div>
+        <input type="checkbox" name="round-trip" id="" value="true" > Ngày khứ hồi
         <div>
-          <input type="date" name="" id="" class="date">
+          <?php 
+            if($round_trip='fale'){
+              echo '<input type="date" name="" id="" class="date">';
+            } 
+            else{
+              echo 'k kkk ';
+            }
+          ?>
+          <!-- <input type="date" name="" id="" class="date"> -->
         </div>
       </div>
     </div>
     <div>
-    <button type="submit" class="search-airline">Tìm chuyến bay</button>
+    <button type="submit" class="search-airline" name="submit">Tìm chuyến bay</button>
     </div>
   </form>
 </div>

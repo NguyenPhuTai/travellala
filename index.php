@@ -2,6 +2,7 @@
     include_once('header.php');
     require_once('config.php');
     $result=mysqli_query($conn,"SELECT * FROM `airport` WHERE 1");
+    $display_class = mysqli_query($conn,"SELECT * FROM `class` WHERE 1");
     if(isset($_GET['submit'])){
       $round_trip=$_GET['round-trip'];
     }
@@ -50,9 +51,6 @@
     margin-top: 2%;
     width: 350px;
     margin-left: 68%;
-  }
-  .class{
-    
   }
 </style>
 <div class="container">
@@ -142,20 +140,18 @@
         <div>
           <select name="" id="input" class="form-control" >
             <option value="" checked>Người lớn </option>
-            <option value="">Người lớn </option>
-            <option value="">Người lớn </option>
+            <option value="">Trẻ em </option>
           </select>
         </div>
       </div>
       <div class="select-item">
         <div>Hạng ghế</div>
         <div>
-          <select name="" id="input" class="form-control">
+          <select name="class" id="input" class="form-control"  required="required">
             <div>
-              <option value="" class="class" checked>Phổ thông</option>
-              <option value="" class="class">Phổ thông đặc biệt</option>
-              <option value="" class="class">Thương gia</option>
-              <option value="" class="class">Hạng nhất</option>
+              <?php foreach ($display_class as $key) { ?>
+              <option value="<?php echo $key['id_class'] ?>" class="class"><?php echo $key['name_class']; ?></option>
+              <?php } ?>
             </div>
           </select>
         </div>
