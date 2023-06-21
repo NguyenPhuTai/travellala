@@ -7,8 +7,10 @@
         $email=$_POST['email'];
         $password=$_POST['password'];
         $role=check_admin($email,$password);
+        $kq=getadmininfo($email,$password);
         $_SESSION['role']=$role;
         if($role==1){
+            $_SESSION['ad_name']=$kq[0]['name_admin'];
             header('location: admin.php');
         }
         else{
@@ -43,7 +45,7 @@
         
             <div class="form-group">
                 <label for="">Email</label>
-                <input type="text" class="form-control" id="" placeholder="email" name="email" required>
+                <input type="email" class="form-control" id="" placeholder="email" name="email" required>
                 <br>
                 <label for="">Password</label>
                 <input type="password" class="form-control" id="" placeholder="Password" name="password" required>

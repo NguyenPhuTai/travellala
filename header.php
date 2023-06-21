@@ -17,17 +17,22 @@ if (isset($_POST['signin']) && ($_POST['signin'])) {
     $_SESSION['role'] = $role;
     $kq = getuserinfo($email, $password);
     if ($role == 1) {
-        $_SESSION['username'] = $kq[0]['name_customer'];
-        header('location: admin.php');}
-    else {
-        //$txt_erro="Thông tin tài khoản không chính xác";
-        // header('location: create-acc.php');
         $_SESSION['role'] = $role;
         $_SESSION['email'] = $kq[0]['email'];
         $_SESSION['username'] = $kq[0]['name_customer'];
         $_SESSION['id'] = $kq[0]['id_customer'];
 
         header('location: index.php');
+    }
+    else {
+        $txt_erro="Thông tin tài khoản không chính xác";
+        // header('location: create-acc.php');
+        // $_SESSION['role'] = $role;
+        // $_SESSION['email'] = $kq[0]['email'];
+        // $_SESSION['username'] = $kq[0]['name_customer'];
+        // $_SESSION['id'] = $kq[0]['id_customer'];
+
+        // header('location: index.php');
     }
 }
 
@@ -228,9 +233,9 @@ if (isset($_POST['signin']) && ($_POST['signin'])) {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
                         <?php
-                        if (isset($txt_erro) && ($txt_erro != "")) {
-                            echo "<font color='red'>" . $txt_erro . "</font>";
-                        }
+                            // if (isset($txt_erro) && ($txt_erro != "")) {
+                            //     echo "<font color='red'>" . $txt_erro . "</font>";
+                            // }
                         ?>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Action</a></li>
@@ -255,7 +260,7 @@ if (isset($_POST['signin']) && ($_POST['signin'])) {
                             </a>
                             <form class="form" role="form" method="post" accept-charset="UTF-8" id="login-nav">
                                  <div class="form-group">
-                                     <input type="submit" class="btn btn-primary btn-block thoat" name="thoat" value="Đăng xuất">
+                                     <input type="submit" class="btn btn-primary btn-block thoat" name="thoat" value="thoat">
                                  </div>
                             </form>';
                     } else { ?>
@@ -279,11 +284,12 @@ if (isset($_POST['signin']) && ($_POST['signin'])) {
                                                 <div class="form-group">
                                                     <label class="sr-only" for="exampleInputPassword2">Password</label>
                                                     <input type="password" class="form-control" name="password" id="exampleInputPassword2" placeholder="Password" required>
-                                                    <!-- <div class="checkbox">
-                                                            <label>
-                                                                <input type="checkbox"> keep me logged-in
-                                                            </label>
-                                                        </div> -->
+                                                    <?php if(isset($txt_erro)&&($txt_erro!="")){ ?>
+                                                    <div class="alert alert-danger">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                        <strong><?php echo $txt_erro; ?></strong>
+                                                    </div>
+                                                    <?php } ?>
                                                     <div class="help-block text-right"><a href="">Forget the password ?</a></div>
                                                 </div>
                                                 <div class="form-group">
