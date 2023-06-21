@@ -39,3 +39,13 @@ function getuserinfo($email, $password)
     $kq = $abc->fetchAll();
     return $kq;
 }
+function check_admin($email, $password)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM admin WHERE username='" . $email . "' AND password='" . $password . "'");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    if(count($kq)>0) return $kq[0]['role'];
+    else return 0;
+}

@@ -5,7 +5,7 @@ if (isset($_POST['thoat'])) {
   if (isset($_SESSION['role'])) {
     unset($_SESSION['role']);
     unset($_SESSION['username']);
-    header('location: index.php');
+    header('location: login-admin.php');
   }
 } else {
   if (isset($_SESSION['role']) && ($_SESSION['role'] == 1)) {
@@ -246,6 +246,6 @@ if (isset($_POST['thoat'])) {
             ?>
         <?php } else {
         //echo "?";
-        header('location: create-acc.php');
+        header('location: login-admin.php');
       }
     } ?>

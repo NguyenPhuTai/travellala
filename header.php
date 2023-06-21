@@ -255,7 +255,7 @@ if (isset($_POST['signin']) && ($_POST['signin'])) {
                             </a>
                             <form class="form" role="form" method="post" accept-charset="UTF-8" id="login-nav">
                                  <div class="form-group">
-                                     <input type="submit" class="btn btn-primary btn-block thoat" name="thoat" value="Thoat">
+                                     <input type="submit" class="btn btn-primary btn-block thoat" name="thoat" value="Đăng xuất">
                                  </div>
                             </form>';
                     } else { ?>
