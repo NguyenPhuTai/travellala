@@ -1,17 +1,18 @@
 <?php
-session_start();
-ob_start();
-if (isset($_POST['thoat'])) {
-  if (isset($_SESSION['role'])) {
-    unset($_SESSION['role']);
-    unset($_SESSION['ad_name']);
-    header('location: login-admin.php');
-  }
-} else {
-  if (isset($_SESSION['role']) && ($_SESSION['role'] == 1)) {
-    require_once "config.php";
-    // include "function.php";
-    include_once "user.php";
+  session_start();
+  ob_start();
+  if (isset($_POST['thoat'])) {
+    if (isset($_SESSION['role'])) {
+      unset($_SESSION['role']);
+      unset($_SESSION['ad_name']);
+      header('location: login-admin.php');
+    }
+  } 
+  else {
+    if (isset($_SESSION['role']) && ($_SESSION['role'] == 1)) {
+      require_once "config.php";
+      // include "function.php";
+      include_once "user.php";
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -111,7 +112,7 @@ if (isset($_POST['thoat'])) {
           <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <input type="submit" value="hãng bay" class="input-side-bar" name="airline">
-            <input type="submit" value="chuyến bay" class="input-side-bar">
+            <input type="submit" value="chuyến bay" class="input-side-bar" name="airline">
             <input type="submit" value="hãng bay" class="input-side-bar">
             <input type="submit" value="hãng bay" class="input-side-bar">
             <input type="submit" value="hãng bay" class="input-side-bar">
@@ -133,6 +134,22 @@ if (isset($_POST['thoat'])) {
           </form>
         </ul>
       </nav>  
+      <?php 
+      if(isset($_GET['airline'])){
+        $action=$_GET['airline'];
+        switch ($action) {
+          case 'chuyến bay':
+            echo '1222324';
+            break;
+          case 'hãng bay':
+            echo 'hihi';
+            break;
+          default:
+            # code...
+            break;
+          }
+      }
+      ?>
         <script>
         function openNav() {
           document.getElementById("mySidenav").style.width = "250px";
@@ -141,6 +158,7 @@ if (isset($_POST['thoat'])) {
           document.getElementById("mySidenav").style.width = "0";
         }
         </script>
+
     </body>
             <?php
             // include_once "fix-index.php";
