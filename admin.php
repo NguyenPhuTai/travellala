@@ -13,6 +13,12 @@
       require_once "config.php";
       // include "function.php";
       include_once "user.php";
+      $airport=mysqli_query($conn,"SELECT * FROM `airport` WHERE 1");
+      $flight=mysqli_query($conn,"SELECT * FROM `flight` WHERE 1");
+      $schedule=mysqli_query($conn,"SELECT s.id,s.time,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',b.name_airport AS'san bay den' FROM schedule s 
+      CROSS JOIN route r ON s.id_route=r.id_route
+      CROSS JOIN airport a ON r.id_airport_go=a.id_airport
+      CROSS JOIN airport b ON r.id_airport_come=b.id_airport");
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -33,6 +39,22 @@
       <link rel="short icon" href="photo/logo3.png">
       <link rel="stylesheet" href="style.css">
       <style>
+        table{
+          margin-bottom: 10%;
+        }
+        th{
+          text-align: center;
+          padding: 20px;
+        }
+        td{
+          text-align: center;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+        .container{
+          display: flex;
+          justify-content: center;
+        }
         .input-side-bar{
           margin-top: 10%;
           color: #818181;
@@ -46,7 +68,7 @@
         }
         .navbar{
           display: flex;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
           
           
         }
@@ -57,7 +79,7 @@
           
         }
         .navbar-right{
-          margin-left: 70%;
+          margin-left: 60%;
         }
         .thoat{
           margin-top: 50%;
@@ -111,9 +133,9 @@
         <form action="" method="get">
           <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <input type="submit" value="hãng bay" class="input-side-bar" name="airline">
-            <input type="submit" value="chuyến bay" class="input-side-bar" name="airline">
-            <input type="submit" value="hãng bay" class="input-side-bar">
+            <input type="submit" value="hãng bay" class="input-side-bar" name="action">
+            <input type="submit" value="chuyến bay" class="input-side-bar" name="action">
+            <input type="submit" value="lịch trình bay" class="input-side-bar" name="action">
             <input type="submit" value="hãng bay" class="input-side-bar">
             <input type="submit" value="hãng bay" class="input-side-bar">
           </div>
@@ -135,19 +157,93 @@
         </ul>
       </nav>  
       <?php 
-      if(isset($_GET['airline'])){
-        $action=$_GET['airline'];
+      if(isset($_GET['action'])){
+        $action=$_GET['action'];
         switch ($action) {
-          case 'chuyến bay':
-            echo '1222324';
-            break;
           case 'hãng bay':
-            echo 'hihi';
-            break;
-          default:
-            # code...
-            break;
-          }
+      ?>
+      <div class="container">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name airport</th>
+          <th>city</th>
+          <th>code airport</th>
+        </tr>
+        <?php foreach ($airport as $key) { ?>
+        <tr>
+          <td><?php echo $key['id_airport'];?></td>
+          <td><?php echo $key['name_airport'];?></td>
+          <td><?php echo $key['city'];?></td>
+          <td><?php echo $key['code_airport'];?></td>
+        </tr>
+        <?php } break; ?>
+      </table>
+      </div>
+      <?php case 'chuyến bay':?>
+      <div class="container">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Code flight</th>
+          <th>type air</th>
+          <th>picture</th>
+          <th>number vip 1</th>
+          <th>number vip 2</th>
+          <th>number vip 3</th>
+        </tr>
+        <?php foreach ($flight as $key) { ?>
+        <tr>
+          <td><?php echo $key['id_flight'];?></td>
+          <td><?php echo $key['code_flight'];?></td>
+          <td><?php echo $key['type_air'];?></td>
+          <td><?php echo $key['img'];?></td>
+          <td><?php echo $key['number_vip_1'];?></td>
+          <td><?php echo $key['number_vip_2'];?></td>
+          <td><?php echo $key['number_vip_3'];?></td>
+        </tr>
+        <?php } break; ?>
+        <?php case 'lịch trình bay':?>
+      <div class="container">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>time</th>
+          <th>sum time</th>
+          <th>fix number vip 1</th>
+          <th>fix number vip 2</th>
+          <th>fix number vip 3</th>
+          <th>price number vip 1</th>
+          <th>price number vip 2</th>
+          <th>price number vip 3</th>
+          <th>price adult</th>
+          <th>price child</th>
+          <th>price baby</th>
+          <th>airport go</th>
+          <th>airport come</th>
+        </tr>
+        <?php foreach ($schedule as $key) { ?>
+        <tr>
+          <td><?php echo $key['id'];?></td>
+          <td><?php echo $key['time'];?></td>
+          <td><?php echo $key['sum_time'];?></td>
+          <td><?php echo $key['fix_number_vip_1'];?></td>
+          <td><?php echo $key['fix_number_vip_2'];?></td>
+          <td><?php echo $key['fix_number_vip_3'];?></td>
+          <td><?php echo $key['price_number_vip_1'];?></td>
+          <td><?php echo $key['price_number_vip_2'];?></td>
+          <td><?php echo $key['price_number_vip_3'];?></td>
+          <td><?php echo $key['price_adult'];?></td>
+          <td><?php echo $key['price_child'];?></td>
+          <td><?php echo $key['price_baby'];?></td>
+          <td><?php echo $key['san bay den'];?></td>
+          <td><?php echo $key['san bay di'];?></td>
+        </tr>
+        <?php } break; ?>
+      </table>
+      </table>
+      </div>
+      <?php }
       }
       ?>
         <script>
