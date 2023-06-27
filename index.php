@@ -55,7 +55,7 @@
   }
 </style>
 <div class="container">
-  <h2>Carousel Example</h2>
+  <!-- <h2>HI!</h2> -->
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">

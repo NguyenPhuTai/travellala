@@ -5,7 +5,7 @@ require_once "config.php";
 include_once "user.php";
 if (isset($_POST['thoat'])&&($role!=1)) {
     if (isset($_SESSION['username'])) {
-      unset($_SESSION['username']);
+      session_destroy();
       header('location: index.php');
     }
   } 

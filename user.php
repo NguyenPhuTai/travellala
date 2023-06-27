@@ -42,7 +42,7 @@ function getuserinfo($email, $password)
 function check_admin($email, $password)
 {   
     $conn = connectdb();
-    $abc = $conn->prepare("SELECT * FROM admin WHERE username='" . $email . "' AND password='" . $password . "'");
+    $abc = $conn->prepare("SELECT * FROM admin WHERE email='" . $email . "' AND password='" . $password . "'");
     $abc->execute();
     $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $abc->fetchAll();
@@ -52,7 +52,7 @@ function check_admin($email, $password)
 function getadmininfo($email, $password)
 {
     $conn = connectdb();
-    $abc = $conn->prepare("SELECT * FROM admin WHERE username='" . $email . "' AND password='" . $password . "'");
+    $abc = $conn->prepare("SELECT * FROM admin WHERE email='" . $email . "' AND password='" . $password . "'");
     $abc->execute();
     $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $abc->fetchAll();

@@ -1,21 +1,19 @@
 <?php
-  session_start();
-  ob_start();
-  if (isset($_POST['thoat'])) {
-    if (isset($_SESSION['role'])) {
-      unset($_SESSION['role']);
-      unset($_SESSION['ad_name']);
-      header('location: login-admin.php');
-    }
-  } 
-  else {
-    if (isset($_SESSION['role']) && ($_SESSION['role'] == 1)) {
-      require_once "config.php";
-      // include "function.php";
-      include_once "user.php";
-      $airport=mysqli_query($conn,"SELECT * FROM `airport` WHERE 1");
-      $flight=mysqli_query($conn,"SELECT * FROM `flight` WHERE 1");
-      $schedule=mysqli_query($conn,"SELECT s.id,s.time,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',b.name_airport AS'san bay den' FROM schedule s 
+session_start();
+ob_start();
+if (isset($_POST['thoat'])) {
+  if (isset($_SESSION['role'])) {
+    session_destroy();
+    header('location: login-admin.php');
+  }
+} else {
+  if (isset($_SESSION['role']) && ($_SESSION['role'] == 1)) {
+    require_once "config.php";
+    // include "function.php";
+    include_once "user.php";
+    $airport = mysqli_query($conn, "SELECT * FROM `airport` WHERE 1");
+    $flight = mysqli_query($conn, "SELECT * FROM `flight` WHERE 1");
+    $schedule = mysqli_query($conn, "SELECT s.id,s.time,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',b.name_airport AS'san bay den' FROM schedule s 
       CROSS JOIN route r ON s.id_route=r.id_route
       CROSS JOIN airport a ON r.id_airport_go=a.id_airport
       CROSS JOIN airport b ON r.id_airport_come=b.id_airport");
@@ -39,52 +37,62 @@
       <link rel="short icon" href="photo/logo3.png">
       <link rel="stylesheet" href="style.css">
       <style>
-        table{
+        table {
           margin-bottom: 10%;
         }
-        th{
+
+        th {
           text-align: center;
           padding: 20px;
         }
-        td{
+
+        td {
           text-align: center;
           padding-left: 5px;
           padding-right: 5px;
         }
-        .container{
+
+        .container {
           display: flex;
           justify-content: center;
         }
-        .input-side-bar{
+
+        .input-side-bar {
           margin-top: 10%;
           color: #818181;
           background: #111;
           border: none;
           margin-left: 50%;
-          transform:translateX(-50%);
+          transform: translateX(-50%);
         }
-        .input-side-bar:hover{
-          color:#f1f1f1;
+
+        .input-side-bar:hover {
+          color: #f1f1f1;
         }
-        .navbar{
+
+        .navbar {
           display: flex;
           flex-wrap: nowrap;
-          
-          
+
+
         }
-        .button-side-bar{
+
+        .button-side-bar {
           margin-top: 21px;
           margin-left: 1%;
           margin-right: 1%;
-          
+
         }
-        .navbar-right{
+
+        .navbar-right {
           margin-left: 60%;
         }
-        .thoat{
+
+        .thoat {
           margin-top: 50%;
           transform: translateY(-50%);
         }
+
         .sidenav {
           height: 100%;
           width: 0;
@@ -120,8 +128,13 @@
         }
 
         @media screen and (max-height: 450px) {
-          .sidenav {padding-top: 15px;}
-          .sidenav a {font-size: 18px;}
+          .sidenav {
+            padding-top: 15px;
+          }
+
+          .sidenav a {
+            font-size: 18px;
+          }
         }
       </style>
 
@@ -133,11 +146,11 @@
         <form action="" method="get">
           <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <input type="submit" value="hãng bay" class="input-side-bar" name="action">
+            <input type="submit" value="Sân bay" class="input-side-bar" name="action">
             <input type="submit" value="chuyến bay" class="input-side-bar" name="action">
             <input type="submit" value="lịch trình bay" class="input-side-bar" name="action">
-            <input type="submit" value="hãng bay" class="input-side-bar">
-            <input type="submit" value="hãng bay" class="input-side-bar">
+            <input type="submit" value="#" class="input-side-bar">
+            <input type="submit" value="#" class="input-side-bar">
           </div>
         </form>
         <span style="font-size:30px;cursor:pointer" class="button-side-bar" onclick="openNav()">&#9776;</span>
@@ -155,112 +168,135 @@
             </div>
           </form>
         </ul>
-      </nav>  
-      <?php 
-      if(isset($_GET['action'])){
-        $action=$_GET['action'];
+      </nav>
+      <?php
+      if (isset($_GET['action'])) {
+        $action = $_GET['action'];
         switch ($action) {
-          case 'hãng bay':
+          case 'Sân bay':
       ?>
-      <div class="container">
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Name airport</th>
-          <th>city</th>
-          <th>code airport</th>
-        </tr>
-        <?php foreach ($airport as $key) { ?>
-        <tr>
-          <td><?php echo $key['id_airport'];?></td>
-          <td><?php echo $key['name_airport'];?></td>
-          <td><?php echo $key['city'];?></td>
-          <td><?php echo $key['code_airport'];?></td>
-        </tr>
-        <?php } break; ?>
-      </table>
-      </div>
-      <?php case 'chuyến bay':?>
-      <div class="container">
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Code flight</th>
-          <th>type air</th>
-          <th>picture</th>
-          <th>number vip 1</th>
-          <th>number vip 2</th>
-          <th>number vip 3</th>
-        </tr>
-        <?php foreach ($flight as $key) { ?>
-        <tr>
-          <td><?php echo $key['id_flight'];?></td>
-          <td><?php echo $key['code_flight'];?></td>
-          <td><?php echo $key['type_air'];?></td>
-          <td><?php echo $key['img'];?></td>
-          <td><?php echo $key['number_vip_1'];?></td>
-          <td><?php echo $key['number_vip_2'];?></td>
-          <td><?php echo $key['number_vip_3'];?></td>
-        </tr>
-        <?php } break; ?>
-        <?php case 'lịch trình bay':?>
-      <div class="container">
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>time</th>
-          <th>sum time</th>
-          <th>fix number vip 1</th>
-          <th>fix number vip 2</th>
-          <th>fix number vip 3</th>
-          <th>price number vip 1</th>
-          <th>price number vip 2</th>
-          <th>price number vip 3</th>
-          <th>price adult</th>
-          <th>price child</th>
-          <th>price baby</th>
-          <th>airport go</th>
-          <th>airport come</th>
-        </tr>
-        <?php foreach ($schedule as $key) { ?>
-        <tr>
-          <td><?php echo $key['id'];?></td>
-          <td><?php echo $key['time'];?></td>
-          <td><?php echo $key['sum_time'];?></td>
-          <td><?php echo $key['fix_number_vip_1'];?></td>
-          <td><?php echo $key['fix_number_vip_2'];?></td>
-          <td><?php echo $key['fix_number_vip_3'];?></td>
-          <td><?php echo $key['price_number_vip_1'];?></td>
-          <td><?php echo $key['price_number_vip_2'];?></td>
-          <td><?php echo $key['price_number_vip_3'];?></td>
-          <td><?php echo $key['price_adult'];?></td>
-          <td><?php echo $key['price_child'];?></td>
-          <td><?php echo $key['price_baby'];?></td>
-          <td><?php echo $key['san bay den'];?></td>
-          <td><?php echo $key['san bay di'];?></td>
-        </tr>
-        <?php } break; ?>
-      </table>
-      </table>
-      </div>
+            <div class="container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tên sân bay</th>
+                    <th>Thành phố</th>
+                    <th>Code Airport</th>
+                  </tr>
+                </thead>
+                <?php foreach ($airport as $key) { ?>
+                  <tr>
+                    <td><?php echo $key['id_airport']; ?></td>
+                    <td><?php echo $key['name_airport']; ?></td>
+                    <td><?php echo $key['city']; ?></td>
+                    <td><?php echo $key['code_airport']; ?></td>
+                  </tr>
+                <?php }
+                break; ?>
+              </table>
+            </div>
+          <?php
+          case 'chuyến bay': ?>
+            <div class="container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Code flight</th>
+                    <th>type air</th>
+                    <th>picture</th>
+                    <th>number vip 1</th>
+                    <th>number vip 2</th>
+                    <th>number vip 3</th>
+                  </tr>
+                </thead>
+                <?php foreach ($flight as $key) { ?>
+                  <tr>
+                    <td><?php echo $key['id_flight']; ?></td>
+                    <td><?php echo $key['code_flight']; ?></td>
+                    <td><?php echo $key['type_air']; ?></td>
+                    <td><?php echo $key['img']; ?></td>
+                    <td><?php echo $key['number_vip_1']; ?></td>
+                    <td><?php echo $key['number_vip_2']; ?></td>
+                    <td><?php echo $key['number_vip_3']; ?></td>
+                  </tr>
+                <?php }
+                break; ?>
+              <?php
+            case 'lịch trình bay': ?>
+                <div class="container">
+                  <table class="table">
+
+                    <tr>
+                      <th>ID</th>
+                      <th>Thời gian bay</th>
+                      <th>Tổng thời gian bay</th>
+                      <th>Số ghế còn lại VIP 1</th>
+                      <th>Số ghế còn lại VIP 2</th>
+                      <th>Số ghế còn lại VIP 3</th>
+                      <th>Giá ghế VIP 1</th>
+                      <th>Giá ghế VIP 2</th>
+                      <th>Giá ghế VIP 3</th>
+                      <th>Giá vé người lớn</th>
+                      <th>Giá vé trẻ em</th>
+                      <th>Giá vé em bé</th>
+                      <th>Airport đi</th>
+                      <th>Airport đến</th>
+                    </tr>
+
+                    <?php foreach ($schedule as $key) { ?>
+                      <tr>
+                        <td><?php echo $key['id']; ?></td>
+                        <td><?php echo $key['time']; ?></td>
+                        <td><?php echo $key['sum_time']; ?></td>
+                        <td><?php echo $key['fix_number_vip_1']; ?></td>
+                        <td><?php echo $key['fix_number_vip_2']; ?></td>
+                        <td><?php echo $key['fix_number_vip_3']; ?></td>
+                        <td><?php echo $key['price_number_vip_1']; ?></td>
+                        <td><?php echo $key['price_number_vip_2']; ?></td>
+                        <td><?php echo $key['price_number_vip_3']; ?></td>
+                        <td><?php echo $key['price_adult']; ?></td>
+                        <td><?php echo $key['price_child']; ?></td>
+                        <td><?php echo $key['price_baby']; ?></td>
+                        <td><?php echo $key['san bay den']; ?></td>
+                        <td><?php echo $key['san bay di']; ?></td>
+                      </tr>
+                    <?php }
+                    break; ?>
+                  </table>
+              </table>
+            </div>
       <?php }
-      }
+        }
       ?>
-        <script>
+
+
+
+
+
+
+
+
+
+
+
+      <script>
         function openNav() {
           document.getElementById("mySidenav").style.width = "250px";
         }
+
         function closeNav() {
           document.getElementById("mySidenav").style.width = "0";
         }
-        </script>
+      </script>
 
     </body>
-            <?php
-            // include_once "fix-index.php";
-            ?>
-        <?php } else {
-        //echo "?";
-        header('location: login-admin.php');
-      }
-    } ?>
+    <?php
+    // include_once "fix-index.php";
+    ?>
+<?php } else {
+    //echo "?";
+    header('location: login-admin.php');
+  }
+} ?>
