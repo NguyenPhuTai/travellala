@@ -4,15 +4,17 @@
     $result=mysqli_query($conn,"SELECT * FROM `airport` WHERE 1");
     $display_class = mysqli_query($conn,"SELECT * FROM `class` WHERE 1");
     if(isset($_GET['submit'])){
-      $round_trip=$_GET['round-trip'];
+      // $round_trip=$_GET['round-trip'];
     }
+    $dt = date('Y-m-d');
+    $dt2=date('Y-m-d',strtotime("+3 days"));
 ?>
 
 <style>
   .main-box{
     margin-top: 30px;
     border: none;
-    box-shadow: 0.1px 0.1px 0.1px 0.1px;
+    box-shadow:  1px 2px 5px 0px #aaaaaa;
     border-radius: 5px;
     padding: 2%;
   }
@@ -52,6 +54,9 @@
     margin-top: 2%;
     width: 350px;
     margin-left: 68%;
+  }
+  .answer { 
+    display:none 
   }
 </style>
 <div class="container">
@@ -160,29 +165,30 @@
       <div class="select-item">
         <div>Ngày đi</div>
         <div>
-          <input type="date" name="" id="" class="date" getdate>
+          <input type="date" name="" id="" class="date" value="<?php echo  $dt ;?>" min="<?php echo  $dt ;?>" required>
         </div>
       </div>
       <div class="select-item">
-        <input type="checkbox" name="round-trip" id="" value="true" > Ngày khứ hồi
+        <input type="checkbox" name="round-trip" id="round-trip" value="1" > Ngày khứ hồi
         <div>
-          <?php 
-            if($round_trip='fale'){
-              echo '<input type="date" name="" id="" class="date">';
-            } 
-            else{
-              echo 'k kkk ';
-            }
-          ?>
-          <!-- <input type="date" name="" id="" class="date"> -->
+          <fieldset class="answer">
+            <input type="date" name="" id="" class="date" value="<?php echo  $dt2;?>" min="<?php echo $dt2; ?>">
+          </fieldset>
         </div>
       </div>
     </div>
     <div>
-    <button type="submit" class="search-airline" name="submit">Tìm chuyến bay</button>
+      <input type="submit" value="Tìm chuyên bay" class="search-airline">
     </div>
   </form>
 </div>
+<script>
+  $(function() {
+    $("#round-trip").on("click",function() {
+      $(".answer").toggle(this.checked);
+    });
+  });
+</script>
 <?php
 include_once('footer.php');
 
