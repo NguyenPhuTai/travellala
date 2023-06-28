@@ -136,6 +136,12 @@ if (isset($_POST['thoat'])) {
             font-size: 18px;
           }
         }
+
+        .btn-warning {
+          
+          margin-left: 50%;
+          transform: translateX(-50%);
+        }
       </style>
 
     </head>
@@ -175,7 +181,11 @@ if (isset($_POST['thoat'])) {
         switch ($action) {
           case 'Sân bay':
       ?>
+            <div><a href="add-admin.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <br>
+            <hr>
             <div class="container">
+
               <table class="table">
                 <thead>
                   <tr>
@@ -183,14 +193,19 @@ if (isset($_POST['thoat'])) {
                     <th>Tên sân bay</th>
                     <th>Thành phố</th>
                     <th>Code Airport</th>
+                    <th>Chức năng</th>
                   </tr>
                 </thead>
                 <?php foreach ($airport as $key) { ?>
                   <tr>
+
                     <td><?php echo $key['id_airport']; ?></td>
                     <td><?php echo $key['name_airport']; ?></td>
                     <td><?php echo $key['city']; ?></td>
                     <td><?php echo $key['code_airport']; ?></td>
+                    <td><a href="edit-admin.php?id=<?php echo $key['id_airport']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
+                    <td><a href="delete-admin.php?id=<?php echo $key['id_airport']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
+
                   </tr>
                 <?php }
                 break; ?>
@@ -198,6 +213,9 @@ if (isset($_POST['thoat'])) {
             </div>
           <?php
           case 'chuyến bay': ?>
+           <div><a href="add-admin1.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <br>
+            <hr>
             <div class="container">
               <table class="table">
                 <thead>
@@ -216,15 +234,20 @@ if (isset($_POST['thoat'])) {
                     <td><?php echo $key['id_flight']; ?></td>
                     <td><?php echo $key['code_flight']; ?></td>
                     <td><?php echo $key['type_air']; ?></td>
-                    <td><?php echo $key['img']; ?></td>
+                    <td><img src="img_maybay/<?php echo $key['img']; ?>" width="50px" height="50px" alt=""></td>
                     <td><?php echo $key['number_vip_1']; ?></td>
                     <td><?php echo $key['number_vip_2']; ?></td>
                     <td><?php echo $key['number_vip_3']; ?></td>
+                    <td><a href="edit-admin-1.php?id=<?php echo $key['id_flight']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
+                    <td><a href="delete-admin-1.php?id=<?php echo $key['id_flight']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
                   </tr>
                 <?php }
                 break; ?>
               <?php
             case 'lịch trình bay': ?>
+             <div><a href="add-admin2.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <br>
+            <hr>
                 <div class="container">
                   <table class="table">
 
@@ -261,6 +284,8 @@ if (isset($_POST['thoat'])) {
                         <td><?php echo $key['price_baby']; ?></td>
                         <td><?php echo $key['san bay den']; ?></td>
                         <td><?php echo $key['san bay di']; ?></td>
+                        <td><a href="edit-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
+                    <td><a href="delete-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
                       </tr>
                     <?php }
                     break; ?>

@@ -58,3 +58,33 @@ function getadmininfo($email, $password)
     $kq = $abc->fetchAll();
     return $kq;
 }
+
+function edit($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM airport WHERE id_airport='" . $id . "'" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+
+function edit1($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM flight WHERE id_flight='" . $id . "'" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function edit3($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM schedule WHERE id='" . $id . "'" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+
