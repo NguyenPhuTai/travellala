@@ -4,7 +4,7 @@ require_once "config.php";
 require_once "user.php";
 
 $id = !empty($_GET['id']) ? (INT)$_GET['id'] : 0;
-
+$dt = date("Y-m-d\\h:i:s");
 $kq=edit3($id);
 $err=[];
 if(isset($_POST['submit'])){
@@ -84,7 +84,7 @@ if(isset($_POST['submit'])){
     <legend>Chỉnh sửa thông tin</legend>
     <div class="mb-3">
       <label for="disabledTextInput" class="form-label">Thời gian</label>
-      <input name="time" type="text" class="form-control" placeholder="Thời gian" >
+      <input name="time" type="text" class="form-control" placeholder="Thời gian" min="<?php echo $dt;?>" >
     </div>
     <div class="mb-3">
       <label for="disabledTextInput" class="form-label">Tổng thời gian</label>
