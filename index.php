@@ -53,7 +53,7 @@
     margin-left: 68%;
   }
   .answer { 
-    display:none 
+    display:none;
   }
   .ticket{
     display: flex;
@@ -62,8 +62,8 @@
   }
   .right-box{
     flex:0 80%;
-    display: flex;
-    flex-wrap: nowrap;
+    box-shadow:  1px 2px 5px 0px #aaaaaa;
+    border-radius: 10px;
   }
   .left-box{
     flex:0 20% ;
@@ -71,9 +71,47 @@
   .icon{
     width: 50px;
     height: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
   }
   .time-from-to{
-    
+    display: flex;
+    flex-wrap: nowrap;
+    margin-left: 100px;
+  }
+  .price{
+    margin-left: 100px;
+  }
+  .top-box{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 6%;
+    margin-right: 6%;
+
+  }
+  .bottom-ticket{
+    display: flex;
+    flex-wrap: nowrap;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .select{
+    width: 120px;
+    height: 40px;
+    background: rgb(1, 148, 243);
+    color:#fff;
+    border-radius: 10px;
+    border: none;
   }
 </style>
 <?php
@@ -89,15 +127,36 @@
     
     </div>
     <div class="right-box">
-      <div>
-        <img src="" alt="">
-        <div>vietnamairline</div>
-      </div>
-      <div class="time-from-to">
+      <div class="top-box">
+        <img src="photo/logo3.png" alt="" style="width: 50px;height: 50px;">
         <div>
-          20:00
+          <h3>vietnamairline</h3>
         </div>
-        <img class="icon" src="data:image/png;base64,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">
+        <div class="time-from-to">
+          <div>
+            <h3>20:00</h3>
+            <h3>HNG</h3>
+          </div>
+          <div>
+            <h4 style="text-align:center ;">11h</h4>
+            <img class="icon" src="data:image/png;base64,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">
+          </div>
+          <div>
+            <h3>02:00</h3>
+            <h3>VND</h3>
+          </div>
+        </div>
+        <div class="price">
+          <h3>6.300.000VND/khách</h3>
+        </div>
+      </div>
+      <div class="bottom-ticket">
+        <div>
+          <div>chi tiết</div>
+        </div>
+        <div>
+          <input type="button" value="chọn" class="select">
+        </div>
       </div>
     </div>
 </div>
