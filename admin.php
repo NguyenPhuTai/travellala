@@ -1,6 +1,8 @@
 <?php
 session_start();
 ob_start();
+require_once "config.php";
+require_once "user.php";
 if (isset($_POST['thoat'])) {
   if (isset($_SESSION['role'])) {
     session_destroy();
@@ -229,19 +231,23 @@ if (isset($_POST['thoat'])) {
                     <th>number vip 3</th>
                   </tr>
                 </thead>
-                <?php foreach ($flight as $key) { ?>
+                <?php 
+                $stt=1;
+                
+                foreach ($flight as $key) { ?>
                   <tr>
                     <td><?php echo $key['id_flight']; ?></td>
                     <td><?php echo $key['code_flight']; ?></td>
                     <td><?php echo $key['type_air']; ?></td>
-                    <td><img src="img_maybay/<?php echo $key['img']; ?>" width="50px" height="50px" alt=""></td>
+                    <td><form action="#" enctype="multipart/form-data"><img src="img/<?php echo $key['img']; ?>" width="50px" height="50px" alt=""> </form></td>
                     <td><?php echo $key['number_vip_1']; ?></td>
                     <td><?php echo $key['number_vip_2']; ?></td>
                     <td><?php echo $key['number_vip_3']; ?></td>
                     <td><a href="edit-admin-1.php?id=<?php echo $key['id_flight']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
                     <td><a href="delete-admin-1.php?id=<?php echo $key['id_flight']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
                   </tr>
-                <?php }
+                <?php  }
+                $stt++;
                 break; ?>
               <?php
             case 'lịch trình bay': ?>

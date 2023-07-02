@@ -92,3 +92,4 @@ function price($price_vip,$price_person){
     $conn = connectdb();
     $price=$price_vip + $price_person;
 }
+

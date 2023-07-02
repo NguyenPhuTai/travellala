@@ -87,7 +87,7 @@ if(isset($_POST['submit'])){
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
  
     <legend>Thêm mới thông tin</legend>
     <?php if(count($err)) : ?>
