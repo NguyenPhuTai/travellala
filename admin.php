@@ -15,7 +15,7 @@ if (isset($_POST['thoat'])) {
     include_once "user.php";
     $airport = mysqli_query($conn, "SELECT * FROM `airport` WHERE 1");
     $flight = mysqli_query($conn, "SELECT * FROM `flight` WHERE 1");
-    $schedule = mysqli_query($conn, "SELECT s.id,s.time,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',b.name_airport AS'san bay den' FROM schedule s 
+    $schedule = mysqli_query($conn, "SELECT a.id_airport as 'id di',b.id_airport as 'id den',s.id,s.time,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',b.name_airport AS'san bay den' FROM schedule s 
       CROSS JOIN route r ON s.id_route=r.id_route
       CROSS JOIN airport a ON r.id_airport_go=a.id_airport
       CROSS JOIN airport b ON r.id_airport_come=b.id_airport");
@@ -157,7 +157,7 @@ if (isset($_POST['thoat'])) {
             <input type="submit" value="Sân bay" class="input-side-bar" name="action">
             <input type="submit" value="chuyến bay" class="input-side-bar" name="action">
             <input type="submit" value="lịch trình bay" class="input-side-bar" name="action">
-            <input type="submit" value="#" class="input-side-bar">
+            <input type="submit" value="Loại máy bay" class="input-side-bar">
             <input type="submit" value="#" class="input-side-bar">
           </div>
         </form>
@@ -272,7 +272,9 @@ if (isset($_POST['thoat'])) {
                       <th>Giá vé người lớn</th>
                       <th>Giá vé trẻ em</th>
                       <th>Giá vé em bé</th>
+                      <th>ID Airport đi</th>
                       <th>Airport đi</th>
+                      <th>ID Airport đến</th>
                       <th>Airport đến</th>
                     </tr>
 
@@ -290,8 +292,10 @@ if (isset($_POST['thoat'])) {
                         <td><?php echo $key['price_adult']; ?></td>
                         <td><?php echo $key['price_child']; ?></td>
                         <td><?php echo $key['price_baby']; ?></td>
-                        <td><?php echo $key['san bay den']; ?></td>
+                        <td><?php echo $key['id di']; ?></td>
                         <td><?php echo $key['san bay di']; ?></td>
+                        <td><?php echo $key['id den']; ?></td>
+                        <td><?php echo $key['san bay den']; ?></td>
                         <td><a href="edit-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
                         <td><a href="delete-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
                       </tr>
@@ -300,6 +304,20 @@ if (isset($_POST['thoat'])) {
                   </table>
               </table>
             </div>
+          <?php
+          case 'Loại máy bay': ?>
+            <div><a href="add-admin1.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <br>
+            <hr>
+            <div class="container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Loại máy bay</th>
+                  </tr>
+                </thead>
+                
       <?php
            default: 
             

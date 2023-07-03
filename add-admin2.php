@@ -60,7 +60,9 @@ if(isset($_POST['submit'])){
 
     if(empty($err)){
         
-        $a=mysqli_query($conn,"INSERT INTO schedule(time,sum_time,fix_number_vip_1,fix_number_vip_2,fix_number_vip_3,price_number_vip_1,price_number_vip_2,price_number_vip_3,price_adult,price_child,price_baby,id_route) VALUES ('$time','$sumtime',$fixvip1,$fixvip2,$fixvip3,$gvip1,$gvip2,$gvip3,$gl1,$gl2,$gl3,$route_2)");
+        $a=mysqli_query($conn,"INSERT INTO schedule(time,sum_time,fix_number_vip_1,fix_number_vip_2,
+        fix_number_vip_3,price_number_vip_1,price_number_vip_2,price_number_vip_3,price_adult,price_child,price_baby,id_route)
+         VALUES ('$time','$sumtime',$fixvip1,$fixvip2,$fixvip3,$gvip1,$gvip2,$gvip3,$gl1,$gl2,$gl3,$route_2)");
     }
     if($a){
         header("Location: thanhcong.php");
@@ -86,7 +88,7 @@ if(isset($_POST['submit'])){
 
 <form method="POST">
  
-    <legend>Chỉnh sửa thông tin</legend>
+    <legend>Thêm mới thông tin</legend>
     <div class="mb-3">
       <label for="disabledTextInput" class="form-label">Thời gian</label>
       <input name="time" type="datetime-local" class="form-control" placeholder="Thời gian" min="<?php echo $dt;?>" >

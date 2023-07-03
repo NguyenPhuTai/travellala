@@ -93,3 +93,21 @@ function price($price_vip,$price_person){
     $price=$price_vip + $price_person;
 }
 
+function id_airport($add)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM airport a  WHERE a.name_airport='" . $add . "'");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function id_airport_1($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM airport a  WHERE a.id_airport='" . $id . "'");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}

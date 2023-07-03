@@ -6,7 +6,9 @@ require_once "user.php";
 $id = !empty($_GET['id']) ? (int)$_GET['id'] : 0;
 $airport= mysqli_query($conn,"SELECT * FROM airport WHERE id_airport=$id");
 foreach($airport as $a);
-$schedule = mysqli_query($conn, "SELECT s.id,s.time, a.name_airport,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',b.name_airport AS'san bay den' FROM schedule s 
+$schedule = mysqli_query($conn, "SELECT a.id_airport as 'id di',b.id_airport as 'id den',s.id,s.time, a.name_airport,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,
+s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',
+b.name_airport AS'san bay den' FROM schedule s 
       CROSS JOIN route r ON s.id_route=r.id_route
       CROSS JOIN airport a ON r.id_airport_go=a.id_airport
       CROSS JOIN airport b ON r.id_airport_come=b.id_airport
@@ -20,7 +22,8 @@ WHERE s.id=$id");
 foreach($test as $t);
 $t1=$t['id_airport_go'];
 $t2=$t['id_airport_come'];
-echo $t1.'<br>'.$t2.'<br>';
+
+
 $kq = edit3($id);
 $err = [];
 
@@ -76,32 +79,76 @@ if (isset($_POST['submit'])) {
   if (empty($add2)) {
     $err[] = "Không để trống Airport Đến";
   }
-  if (empty($add1)) {
+  else{
+    //lấy thông tin trước khi xóa
+    $before_add=id_airport_1($add2);
+    $name_add=$before_add[0]['name_airport'];
+    $id_add=$before_add[0]['id_airport'];
+    $city_add=$before_add[0]['city'];
+    $code_add=$before_add[0]['code_airport'];
+    //
+    $si=$s['id den'];
+    
+    $before_add=id_airport_1($si);
+     $name_add1=$before_add[0]['name_airport'];
+     $id_add1=$before_add[0]['id_airport'];
+     $city_add1=$before_add[0]['city'];
+     $code_add1=$before_add[0]['code_airport'];
+    //xóa trước khi update
+    $b0=mysqli_query($conn,"DELETE FROM airport  WHERE id_airport=$id_add");
+    // $b update bị trùng id khóa chính
+    $b=mysqli_query($conn,"UPDATE airport a SET a.id_airport=$id_add,a.name_airport='$name_add',a.city='$city_add',a.code_airport='$code_add'
+     where a.id_airport=$si ");
+     //khi đó thằng đầu tiên sẽ biến mất, thay vào đó là thông tin $b
+     //thì phải thêm lại thằng đầu tiên để database không thiếu
+     
+     $b1=mysqli_query($conn,"INSERT INTO airport(name_airport,id_airport,city,code_airport)
+     VALUES ('$name_add1', $id_add1,'$city_add1','$code_add1')");
+  }
+  if (empty($add1)) { //$add1 la` id
     $err[] = "Không để trống Airport Đi";
   }
-  // else{
-   
-  //    $buoc1=mysqli_query($conn,"SELECT a.id_airport FROM airport a WHERE a.name_airport='$add1'");
+  else{
+    //lấy thông tin trước khi xóa
+    $before_add=id_airport_1($add1);
+    $name_add=$before_add[0]['name_airport'];
+    $id_add=$before_add[0]['id_airport'];
+    $city_add=$before_add[0]['city'];
+    $code_add=$before_add[0]['code_airport'];
+    //
+    $sid=$s['id di'];
+    
+    $before_add=id_airport_1($sid);
+     $name_add1=$before_add[0]['name_airport'];
+     $id_add1=$before_add[0]['id_airport'];
+     $city_add1=$before_add[0]['city'];
+     $code_add1=$before_add[0]['code_airport'];
+    //xóa trước khi update
+    $b0=mysqli_query($conn,"DELETE FROM airport  WHERE id_airport=$id_add");
+    // $b update bị trùng id khóa chính
+    $b=mysqli_query($conn,"UPDATE airport a SET a.id_airport=$id_add,a.name_airport='$name_add',a.city='$city_add',a.code_airport='$code_add'
+     where a.id_airport=$sid ");
+     //khi đó thằng đầu tiên sẽ biến mất, thay vào đó là thông tin $b
+     //thì phải thêm lại thằng đầu tiên để database không thiếu
      
-  //    $b0=mysqli_query($conn,"UPDATE airport a SET a.id_airport=$buoc1 WHERE a.id_airport=$t1; ");
-  // }
+     $b1=mysqli_query($conn,"INSERT INTO airport(name_airport,id_airport,city,code_airport)
+     VALUES ('$name_add1', $id_add1,'$city_add1','$code_add1')");
+  }
  
   if (empty($err)) {
     $a = mysqli_query($conn, "UPDATE schedule SET time='$time', sum_time='$sumtime', fix_number_vip_1=$fixvip1,fix_number_vip_2=$fixvip2,fix_number_vip_3=$fixvip3,price_number_vip_1=$gvip1,price_number_vip_2=$gvip2,price_number_vip_3=$gvip3,price_adult=$gl1,price_child=$gl2,price_baby=$gl3 WHERE id=$id");
 
   }
-  if($a){
-    echo "a ok";
-  }
-  if($b0){
-    echo "b ok";
-  }
-  
-  // if ($a && $b && $c) {
-  //   header("Location: thanhcong.php");
-  // } else {
-  //   header("Location: thatbai.php");
+  // if($a){
+  //   echo "a ok";
   // }
+ 
+  
+  if ($a && $b) {
+    header("Location: thanhcong.php");
+  } else {
+    header("Location: thatbai.php");
+  }
 }
 
 
@@ -166,38 +213,39 @@ if (isset($_POST['submit'])) {
     <input name="gl3" type="text" class="form-control" placeholder="Giá vé em bé" value="<?php echo $kq[0]['price_baby'] ?>">
   </div>
   <div class="mb-3">
-    <label for="disabledTextInput" class="form-label">Airport Đến</label>
-    <br>
-    <!-- <input name="add1" type="text" class="form-control" placeholder="Airport Đến" value="<?php echo  $s['san bay den']; ?>">
-  </div> -->
-  <select id="class" name="add2">
-            <option value="<?php echo $t2; ?>"><?php echo  $s['san bay den'];?></option>
-            <?php 
-                // Viết câu lệnh truy vấn lấy ra danh sách lớp học từ bảng class
-                $sql = "SELECT * FROM airport";
-                // Thực thi truy vấn trên
-                $result = mysqli_query($conn, $sql);
-                foreach ($result as $class) : ?>
-                    <option value="<?php echo $class['id_airport']; ?>" ><?php echo $class['name_airport']; ?></option>
-            <?php endforeach; ?>
-        </select>
-        </div> 
-  <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Airport Đi</label>
     <br>
-    <!-- <input name="add2" type="text" class="form-control" placeholder="Airport Đi" value="<?php echo $s['san bay di']; ?>"> -->
+    <!-- <input name="add2" type="text" class="form-control" placeholder="Airport Đi" value="<?php echo $s['id di'].' - ' . $s['san bay di']; ?>"> -->
     <select id="class" name="add1">
-            <option value="<?php echo $t1; ?>"><?php echo $s['san bay di']; ?></option>
+            <option value="<?php echo $t1; ?>"><?php echo $s['id di'].' - ' . $s['san bay di']; ?></option>
             <?php 
-                // Viết câu lệnh truy vấn lấy ra danh sách lớp học từ bảng class
+                
                 $sql = "SELECT * FROM airport";
-                // Thực thi truy vấn trên
+                
                 $result = mysqli_query($conn, $sql);
                 foreach ($result as $class) : ?>
-                    <option value='<?php echo $class['id_airport']; ?>'><?php echo $class['name_airport']; ?></option>
+                    <option value='<?php echo $class['id_airport']; ?>'><?php echo $class['id_airport'].' - ' .$class['name_airport']; ?></option>
             <?php endforeach; ?>
         </select>
   </div>
+  <div class="mb-3">
+    <label for="disabledTextInput" class="form-label">Airport Đến</label>
+    <br>
+    <!-- <input name="add1" type="text" class="form-control" placeholder="Airport Đến" value="<?php  $s['san bay den']; ?>">
+  </div> -->
+  <select id="class" name="add2">
+            <option value="<?php echo $t2; ?>"><?php echo $s['id den'].' - ' .  $s['san bay den'];?></option>
+            <?php 
+                
+                $sql = "SELECT * FROM airport";
+            
+                $result = mysqli_query($conn, $sql);
+                foreach ($result as $class) : ?>
+                    <option value="<?php echo $class['id_airport']; ?>" ><?php echo $class['id_airport'].' - ' . $class['name_airport']; ?></option>
+            <?php endforeach; ?>
+        </select>
+        </div> 
+  
   <br>
   <button name="submit" type="submit" class="btn btn-primary">Submit</button>
 
