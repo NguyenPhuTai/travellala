@@ -4,6 +4,9 @@ require_once "config.php";
 require_once "user.php";
 
 $id = !empty($_GET['id']) ? (INT)$_GET['id'] : 0;
+$route=mysqli_query($conn,"SELECT r.id_route,a.id_airport,b.id_airport,a.name_airport AS 'name airport go',b.name_airport AS'name airport come' FROM `route` r
+  CROSS JOIN airport a ON r.id_airport_go = a.id_airport
+  CROSS JOIN airport b ON r.id_airport_come = b.id_airport");
 $dt = date("Y-m-d\\h:i:s");
 $kq=edit3($id);
 $err=[];
@@ -19,6 +22,7 @@ if(isset($_POST['submit'])){
     $gl1=$_POST['gl1'];
     $gl2=$_POST['gl2'];
     $gl3=$_POST['gl3'];
+    $route_2=$_POST['route'];
 
     if(empty($time)){
         $err[]="Không để trống Thời gian bay";
@@ -56,13 +60,14 @@ if(isset($_POST['submit'])){
 
     if(empty($err)){
         
-        $a=mysqli_query($conn,"INSERT INTO schedule(time,sum_time,fix_number_vip_1,fix_number_vip_2,fix_number_vip_3,price_number_vip_1,price_number_vip_2,price_number_vip_3,price_adult,price_child,price_baby) VALUES ('$time','$sumtime',$fixvip1,$fixvip2,$fixvip3,$gvip1,$gvip2,$gvip3,$gl1,$gl2,$gl3)");
+        $a=mysqli_query($conn,"INSERT INTO schedule(time,sum_time,fix_number_vip_1,fix_number_vip_2,fix_number_vip_3,price_number_vip_1,price_number_vip_2,price_number_vip_3,price_adult,price_child,price_baby,id_route) VALUES ('$time','$sumtime',$fixvip1,$fixvip2,$fixvip3,$gvip1,$gvip2,$gvip3,$gl1,$gl2,$gl3,$route_2)");
     }
     if($a){
         header("Location: thanhcong.php");
     }else{
         header("Location: thatbai.php");
     }
+
 }
 
 
@@ -84,7 +89,7 @@ if(isset($_POST['submit'])){
     <legend>Chỉnh sửa thông tin</legend>
     <div class="mb-3">
       <label for="disabledTextInput" class="form-label">Thời gian</label>
-      <input name="time" type="text" class="form-control" placeholder="Thời gian" min="<?php echo $dt;?>" >
+      <input name="time" type="datetime-local" class="form-control" placeholder="Thời gian" min="<?php echo $dt;?>" >
     </div>
     <div class="mb-3">
       <label for="disabledTextInput" class="form-label">Tổng thời gian</label>
@@ -125,6 +130,14 @@ if(isset($_POST['submit'])){
     <div class="mb-3">
       <label for="disabledTextInput" class="form-label">Giá vé em bé</label>
       <input name="gl3" type="text"  class="form-control" placeholder="Giá vé em bé" >
+    </div>
+    <div class="mb-3">
+      <label for="disabledTextInput" class="form-label">route</label>
+      <select name="route" id="">
+        <?php foreach ($route as $key) {?>
+        <option value="<?php echo $key['id_route'];?>"><?php echo $key['name airport go'].' - '.$key['name airport come'];?></option>
+        <?php } ?>
+      </select>
     </div>
     <br>
     <button name="submit" type="submit" class="btn btn-primary">Submit</button>

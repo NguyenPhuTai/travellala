@@ -114,6 +114,11 @@
     border-radius: 10px;
     border: none;
   }
+  .detail-schedule{
+    color: #fff;
+    border-radius:10px ;
+    background:rgb(1, 148, 243) ;
+  }
 </style>
 <?php
 // truy ván tìm chuyến bay 
@@ -123,14 +128,29 @@
     $date_to=$_GET['date-to'];
     $date_from=$_GET['date-from'];
     $class=$_GET['class'];
+    $display_class=mysqli_query($conn,"SELECT * FROM `class` WHERE 1");
     $schedule=mysqli_query($conn,"SELECT s.time,s.sum_time,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport,a.code_airport
     AS 'code airport go',b.name_airport,b.code_airport AS'code airport come' FROM `schedule` s
       CROSS JOIN route r ON s.id_route = r.id_route
       CROSS JOIN airport a ON r.id_airport_go = a.id_airport
       CROSS JOIN airport b ON r.id_airport_come =b.id_airport
       WHERE r.id_airport_go=$airport_from 
-      AND r.id_airport_come=$airport_to");
+      AND r.id_airport_come=$airport_to 
+      AND s.time HAVING '$date_from'");
 ?>
+<div class="container detail-schedule">
+    <div>
+      <h1>TP HCM (SGN) → Tokyo (TYOA)</h1>
+      <p><?php  $date= strtotime($date_from); $time=strftime('%a,%d-%m-%Y',$date); echo $time;?>
+        | 8 hành khách
+        | <?php foreach ($display_class as $key ) {
+            if ($key['id_class']==$class) {
+              echo $key['name_class'];
+            }
+        } ?>
+      </p>
+    </div>  
+</div>
 <?php foreach ($schedule as $key ) { ?>
 <div class="container ticket">
   <div class="right-box">
@@ -159,7 +179,7 @@
     </div>
     <div class="bottom-ticket">
       <div>
-        <div>chi tiết</div>
+        <a href="">chi tiết</a>
       </div>
       <div>
         <input type="button" value="chọn" class="select">
@@ -299,6 +319,11 @@
   $(function() {
     $("#round-trip").on("click",function() {
       $(".answer").toggle(this.checked);
+    });
+  });
+  $(function() {
+    $("detail").on("click",function() {
+      $(".ticket-2").toggle(this.checked);
     });
   });
 </script>

@@ -1,7 +1,7 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
-    <!-- <meta http-equiv="refresh" content="3;url=admin.php"> -->
+    <meta http-equiv="refresh" content="3;url=admin.php">
     <link rel="short icon" href="photo/logo3.png">  </head>
     <style>
       body {
