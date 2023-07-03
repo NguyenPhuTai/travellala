@@ -11,7 +11,7 @@
         $_SESSION['role']=$role;
         if($role==1){
             $_SESSION['ad_name']=$kq[0]['name_admin'];
-            header('location: admin.php');
+            header('location: admin.php?action=lịch+trình+bay');
         }
         else{
             $txt_erro='Email hoặc mật khẩu không đúng!!!';

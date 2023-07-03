@@ -140,7 +140,7 @@ if (isset($_POST['thoat'])) {
         }
 
         .btn-warning {
-          
+
           margin-left: 50%;
           transform: translateX(-50%);
         }
@@ -162,7 +162,7 @@ if (isset($_POST['thoat'])) {
           </div>
         </form>
         <span style="font-size:30px;cursor:pointer" class="button-side-bar" onclick="openNav()">&#9776;</span>
-        <a href="admin.php"><img src="photo/logo2.jpg" alt="" class="logo-1"></a>
+        <a href="admin.php?action=lịch+trình+bay"><img src="photo/logo2.jpg" alt="" class="logo-1"></a>
         <ul class="nav navbar-nav navbar-right">
           <div class="avatar">
             <img src="icon/avatar-default.jpg" alt="" class="icon-default">
@@ -215,7 +215,7 @@ if (isset($_POST['thoat'])) {
             </div>
           <?php
           case 'chuyến bay': ?>
-           <div><a href="add-admin1.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <div><a href="add-admin1.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
             <br>
             <hr>
             <div class="container">
@@ -231,15 +231,17 @@ if (isset($_POST['thoat'])) {
                     <th>number vip 3</th>
                   </tr>
                 </thead>
-                <?php 
-                $stt=1;
-                
+                <?php
+                $stt = 1;
+
                 foreach ($flight as $key) { ?>
                   <tr>
                     <td><?php echo $key['id_flight']; ?></td>
                     <td><?php echo $key['code_flight']; ?></td>
                     <td><?php echo $key['type_air']; ?></td>
-                    <td><form action="#" enctype="multipart/form-data"><img src="img/<?php echo $key['img']; ?>" width="50px" height="50px" alt=""> </form></td>
+                    <td>
+                      <form action="#" enctype="multipart/form-data"><img src="img/<?php echo $key['img']; ?>" width="50px" height="50px" alt=""> </form>
+                    </td>
                     <td><?php echo $key['number_vip_1']; ?></td>
                     <td><?php echo $key['number_vip_2']; ?></td>
                     <td><?php echo $key['number_vip_3']; ?></td>
@@ -251,9 +253,9 @@ if (isset($_POST['thoat'])) {
                 break; ?>
               <?php
             case 'lịch trình bay': ?>
-             <div><a href="add-admin2.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
-            <br>
-            <hr>
+                <div><a href="add-admin2.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+                <br>
+                <hr>
                 <div class="container">
                   <table class="table">
 
@@ -291,14 +293,18 @@ if (isset($_POST['thoat'])) {
                         <td><?php echo $key['san bay den']; ?></td>
                         <td><?php echo $key['san bay di']; ?></td>
                         <td><a href="edit-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
-                    <td><a href="delete-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
+                        <td><a href="delete-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
                       </tr>
                     <?php }
                     break; ?>
                   </table>
               </table>
             </div>
-      <?php }
+      <?php
+           default: 
+            
+            break;            
+          }
         }
       ?>
 
