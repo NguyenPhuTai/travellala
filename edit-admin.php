@@ -44,7 +44,7 @@ if(isset($_POST['submit'])){
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+<link rel="short icon" href="photo/logo3.png">
 
 <form method="POST">
  

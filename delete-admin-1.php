@@ -12,3 +12,4 @@ if($a){
 }
 
 ?>
+<link rel="short icon" href="photo/logo3.png">
