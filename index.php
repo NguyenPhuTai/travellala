@@ -128,19 +128,21 @@
     $date_to=$_GET['date-to'];
     $date_from=$_GET['date-from'];
     $class=$_GET['class'];
+    $display_airport=mysqli_query($conn,"SELECT * FROM `airport` WHERE 1");
     $display_class=mysqli_query($conn,"SELECT * FROM `class` WHERE 1");
-    $schedule=mysqli_query($conn,"SELECT s.time,s.sum_time,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport,a.code_airport
-    AS 'code airport go',b.name_airport,b.code_airport AS'code airport come' FROM `schedule` s
-      CROSS JOIN route r ON s.id_route = r.id_route
-      CROSS JOIN airport a ON r.id_airport_go = a.id_airport
-      CROSS JOIN airport b ON r.id_airport_come =b.id_airport
+    $schedule=mysqli_query($conn,"SELECT s.id,s.time,s.sum_time,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.id_airport AS'id airport go',a.name_airport AS'name airport go',a.code_airport AS 'code airport go',b.id_airport AS'id airport come',b.name_airport AS'name airport come',b.code_airport AS'code airport come' FROM `schedule` s
+    CROSS JOIN route r ON s.id_route = r.id_route
+    CROSS JOIN airport a ON r.id_airport_go = a.id_airport
+    CROSS JOIN airport b ON r.id_airport_come =b.id_airport
       WHERE r.id_airport_go=$airport_from 
       AND r.id_airport_come=$airport_to 
       AND s.time HAVING '$date_from'");
 ?>
 <div class="container detail-schedule">
     <div>
-      <h1>TP HCM (SGN) → Tokyo (TYOA)</h1>
+      <?php foreach ($display_airport as $key) { ?>
+      <h1><?php if($key['id_airport']==$airport_from){echo $key['name_airport'];} if($key['id_airport']==$airport_to){echo ' → '.$key['name_airport'];} ?></h1>
+      <?php } ?>
       <p><?php  $date= strtotime($date_from); $time=strftime('%a,%d-%m-%Y',$date); echo $time;?>
         | 8 hành khách
         | <?php foreach ($display_class as $key ) {
@@ -182,7 +184,9 @@
         <a href="">chi tiết</a>
       </div>
       <div>
-        <input type="button" value="chọn" class="select">
+        <a href="ticket.php?id=<?php echo $key['id'];?>">
+          <input type="submit" value="chọn" class="select">
+        </a>
       </div>
     </div>
   </div>

@@ -23,7 +23,9 @@ if(isset($_POST['submit'])){
     $gl2=$_POST['gl2'];
     $gl3=$_POST['gl3'];
     $route_2=$_POST['route'];
-
+    $airport =mysqli_query($conn,"");
+    $airport_go= $_GET[''];
+    $airport_come=$_GET[''];
     if(empty($time)){
         $err[]="Không để trống Thời gian bay";
     }
