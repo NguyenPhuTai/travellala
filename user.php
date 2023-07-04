@@ -111,3 +111,22 @@ function id_airport_1($id)
     $kq = $abc->fetchAll();
     return $kq;
 }
+function airport()
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM airport ");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+
+function route()
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM route Where id_route=(SELECT (MAX)id_route as LastID FROM route ) ");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
