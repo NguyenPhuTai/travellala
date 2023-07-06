@@ -3,6 +3,7 @@
     require_once "config.php";
     require_once "user.php";
     $id=$_GET['id'];
+    $sum_price=$_GET['sumprice'];
     $schedule=mysqli_query($conn,"SELECT s.id,s.time,s.sum_time,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.id_airport AS'id airport go',a.name_airport AS'name airport go',a.code_airport AS 'code airport go',b.id_airport AS'id airport come',b.name_airport AS'name airport come',b.code_airport AS'code airport come' FROM `schedule` s
         CROSS JOIN route r ON s.id_route = r.id_route
         CROSS JOIN airport a ON r.id_airport_go = a.id_airport
@@ -89,20 +90,32 @@
         else{
             $id_customer=$_SESSION['id'];
             $test=infoid($id_customer);
+            $getinfoschedule=infoschedule($id);
             $mindate=date('Y-m-d');
             if (isset($_POST['booking'])) {
+                $pnr_number=random_int(00001,99999);
                 $gender=$_POST['gender'];
-                $lastname=$_POST['last name'];
+                $lastname=$_POST['last_name'];
                 $name=$_POST['name'];
                 $birthday=$_POST['birthday'];
                 $nationality=$_POST['nationality'];
                 $Passport_number=$_POST['Passport_number'];
                 $Country_of_Issue=$_POST['Country_of_Issue'];
                 $Passport_Expiry_Date=$_POST['Passport_Expiry_Date'];
-
+                $date=$getinfoschedule[0]['time'];
+                $phone=$test[0]['number_customer'];
+                $email=$test[0]['email'];
+                $insert_to_ticket=mysqli_query($conn,"INSERT INTO `booking_ticket` (`pnr_number`, `id_schedule`, `id_customer`, `phone`, `email`, `time`) 
+                    VALUES ('$pnr_number', '$id', '$id_customer', '$phone', '$email', '$date')");
+                // $insert_to_detail=mysqli_query($conn,"INSERT INTO `booking_ticket_detail` (`id_booking_ticket_detail`, `pnr_number`, `id_customer`, `gender`, `birthday`, `name_class`, `price_class`, `last_name`, `name`, `nationality`, `Passport_number`, `Country_of_Issue`, `Passport Expiry Date`) 
+                //     VALUES (NULL, '$pnr_number', '$id_customer', '$gender', '$birthday', '', '', '', '', '', '', '', '')");
+                if ($insert_to_ticket) {
+                    echo "tc";
+                }
+                else {
+                    echo 'faij';
+                }
             }
-            $sd=random_int(001, 999);
-            echo $sd;
         ?>
         <h3>Thông tin khách hàng</h3>
         <div >
@@ -119,7 +132,7 @@
                     <option value="0">Bà</option>
                 </select>
                 <label for="">Họ (vd: Nguyen)</label>
-                <input type="text" name="last name" required >
+                <input type="text" name="last_name" required >
                 <p>như trên CMND (không dấu)</p>
                 <label for="">Tên Đệm & Tên (vd: Thi Ngoc Anh)</label>
                 <input type="text" name="name" required>
@@ -131,7 +144,7 @@
                 <input type="text" name="nationality" id="" required>
                 <p></p>
                 <label for="">Số hộ chiếu</label>
-                <input type="text" name="Passport_number" required>
+                <input type="text" name="Passport_number" required pattern="[0-9]{11}">
                 <p>Đối với hành khách dưới 18 tuổi, 
                 bạn có thể nhập số ID hợp lệ khác (ví dụ: giấy khai sinh, thẻ học sinh/sinh viên) hoặc ngày sinh (ddmmyyyy)</p>
                 <label for="">Quốc Gia Cấp</label>
@@ -159,12 +172,13 @@
         </div>
       </div>
       <div class="price">
-        <h3>6.300.000VND/khách</h3>
+        <h3><?php echo $sum_price;?>VND/khách</h3>
       </div>        
     </div>
     <?php } ?>
 </div>
 <?php } ?>
+
 <?php
     include_once "footer.php";
 ?>

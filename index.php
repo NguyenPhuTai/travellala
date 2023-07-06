@@ -1,6 +1,7 @@
 <?php
     include_once('header.php');
     require_once('config.php');
+    require_once "user.php";
     $result=mysqli_query($conn,"SELECT * FROM `airport` WHERE 1");
     $display_class = mysqli_query($conn,"SELECT * FROM `class` WHERE 1");
     $dt = date('Y-m-d');
@@ -128,6 +129,7 @@
     $date_to=$_GET['date-to'];
     $date_from=$_GET['date-from'];
     $class=$_GET['class'];
+    $person=$_GET['customer'];
     $display_airport=mysqli_query($conn,"SELECT * FROM `airport` WHERE 1");
     $display_class=mysqli_query($conn,"SELECT * FROM `class` WHERE 1");
     $schedule=mysqli_query($conn,"SELECT s.id,s.time,s.sum_time,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.id_airport AS'id airport go',a.name_airport AS'name airport go',a.code_airport AS 'code airport go',b.id_airport AS'id airport come',b.name_airport AS'name airport come',b.code_airport AS'code airport come' FROM `schedule` s
@@ -137,13 +139,13 @@
       WHERE r.id_airport_go=$airport_from 
       AND r.id_airport_come=$airport_to 
       AND s.time HAVING '$date_from'");
+    $priceclass=0;
+    $priceperson=0;
 ?>
 <div class="container detail-schedule">
     <div>
-      <?php foreach ($display_airport as $key) { ?>
-      <h1><?php if($key['id_airport']==$airport_from){echo $key['name_airport'].'->';} if($key['id_airport']==$airport_to){echo $key['name_airport'];}?></h1>
+      <h1><?php foreach ($display_airport as $key) { if($key['id_airport']==$airport_from){echo $key['name_airport'];}} foreach($display_airport as $key){if($key['id_airport']==$airport_to){echo ' -> '.$key['name_airport'];}}?></h1>
       <h1><?php  ?></h1>
-      <?php } ?>
       <p><?php  $date= strtotime($date_from); $time=strftime('%a,%d-%m-%Y',$date); echo $time;?>
         | 8 hành khách
         | <?php foreach ($display_class as $key ) {
@@ -177,7 +179,28 @@
         </div>
       </div>
       <div class="price">
-        <h3>6.300.000VND/khách</h3>
+        <h3><?php
+          if ($class==1) {
+            $priceclass=$key['price_number_vip_1'];
+          }
+          elseif ($class==2) {
+            $priceclass=$key['price_number_vip_2'];
+          }
+          else {
+            $priceclass=$key['price_number_vip_3'];
+          }
+          if ($person==0) {
+            $priceperson=$key['price_adult'];
+          }
+          elseif ($person==1) {
+            $priceperson=$key['price_child'];
+          }
+          else {
+            $priceperson=$key['price_baby'];
+          }
+          $sum_price=$priceclass+$priceperson;
+          echo $sum_price;
+        ?>VND/khách</h3>
       </div>
     </div>
     <div class="bottom-ticket">
@@ -185,7 +208,11 @@
         <a href="">chi tiết</a>
       </div>
       <div>
-        <a href="ticket.php?id=<?php echo $key['id'];?>">
+        <a href="ticket.php?id=<?php echo $key['id'].'&class=';foreach ($display_class as $key ) {
+            if ($key['id_class']==$class) {
+              echo $key['id_class'];
+            }
+        }echo'&sumprice='.$sum_price;?>">
           <input type="submit" value="chọn" class="select">
         </a>
       </div>
@@ -282,8 +309,9 @@
         <div>Số hành khách</div>
         <div>
           <select name="customer" id="input" class="form-control" >
-            <option value="" checked>Người lớn </option>
-            <option value="">Trẻ em </option>
+            <option value="0" checked>Người lớn</option>
+            <option value="1">Trẻ em </option>
+            <option value="2">Em bé </option>
           </select>
         </div>
       </div>
