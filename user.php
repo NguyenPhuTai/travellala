@@ -39,6 +39,15 @@ function getuserinfo($email, $password)
     $kq = $abc->fetchAll();
     return $kq;
 }
+function infoid($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM customer WHERE id_customer=$id");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
 function check_admin($email, $password)
 {   
     $conn = connectdb();
