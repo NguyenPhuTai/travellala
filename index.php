@@ -141,7 +141,8 @@
 <div class="container detail-schedule">
     <div>
       <?php foreach ($display_airport as $key) { ?>
-      <h1><?php if($key['id_airport']==$airport_from){echo $key['name_airport'];} if($key['id_airport']==$airport_to){echo ' → '.$key['name_airport'];} ?></h1>
+      <h1><?php if($key['id_airport']==$airport_from){echo $key['name_airport'].'->';} if($key['id_airport']==$airport_to){echo $key['name_airport'];}?></h1>
+      <h1><?php  ?></h1>
       <?php } ?>
       <p><?php  $date= strtotime($date_from); $time=strftime('%a,%d-%m-%Y',$date); echo $time;?>
         | 8 hành khách

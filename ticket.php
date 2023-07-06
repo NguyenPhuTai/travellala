@@ -1,6 +1,6 @@
 <?php 
-    include_once"header.php";
-    require_once"config.php";
+    include_once "header.php";
+    require_once "config.php";
 ?>
 <style>
     body{
@@ -25,12 +25,22 @@
         max-width: 800px;
         box-shadow: rgba(3, 18, 26, 0.2) 0px 1px 2px;
     }
+    .book-ticket{
+        border: none;
+        color: #fff;
+        height: 40px;
+        background: rgb(1, 148, 243);
+        margin-top: 20px;
+        border-radius: 10px;
+    }
 </style>
 <div class="container">
     <h1>Đặt chỗ của tôi</h1>
     <p>Điền thông tin và xem lại đặt chỗ</p>
 </div>
 <div class="container">
+    <?php if(isset($_SESSION['username'])){ echo '' ;}
+    else{?>
     <div class="signin">
         <div>
             <img src="icon/signin.png" alt="">
@@ -41,6 +51,7 @@
             <a href="create-acc.php"><h3>Đăng nhập và Đăng kí</h3></a>
         </div>
     </div>
+    <?php } ?>
     <h3>Thông tin khách hàng</h3>
     <div class="info-customer">
         <h4>CHÚ Ý! Đối với trường hợp hành khách đi du lịch quốc tế hoặc quá cảnh ở nước ngoài,
@@ -79,5 +90,5 @@
     </div>
 </div>
 <?php
-    include_once"footer.php";
+    include_once "footer.php";
 ?>
