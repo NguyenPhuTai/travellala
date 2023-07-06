@@ -57,6 +57,15 @@ function infoid($id)
     $kq = $abc->fetchAll();
     return $kq;
 }
+function infoclass($class)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM class WHERE id_class=$class");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
 function check_admin($email, $password)
 {   
     $conn = connectdb();

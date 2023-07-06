@@ -9,6 +9,9 @@
         CROSS JOIN airport a ON r.id_airport_go = a.id_airport
         CROSS JOIN airport b ON r.id_airport_come =b.id_airport
         WHERE id=$id"); 
+    $class=$_GET['class'];
+    $getclassname=infoclass($class);
+    $class_name=$getclassname[0]['name_class'];
 ?>
 <style>
     body{
@@ -105,12 +108,14 @@
                 $date=$getinfoschedule[0]['time'];
                 $phone=$test[0]['number_customer'];
                 $email=$test[0]['email'];
+                echo $birthday;
+                echo $Passport_Expiry_Date;
                 $insert_to_ticket=mysqli_query($conn,"INSERT INTO `booking_ticket` (`pnr_number`, `id_schedule`, `id_customer`, `phone`, `email`, `time`) 
                     VALUES ('$pnr_number', '$id', '$id_customer', '$phone', '$email', '$date')");
-                // $insert_to_detail=mysqli_query($conn,"INSERT INTO `booking_ticket_detail` (`id_booking_ticket_detail`, `pnr_number`, `id_customer`, `gender`, `birthday`, `name_class`, `price_class`, `last_name`, `name`, `nationality`, `Passport_number`, `Country_of_Issue`, `Passport Expiry Date`) 
-                //     VALUES (NULL, '$pnr_number', '$id_customer', '$gender', '$birthday', '', '', '', '', '', '', '', '')");
-                if ($insert_to_ticket) {
-                    echo "tc";
+                $insert_to_detail=mysqli_query($conn,"INSERT INTO `booking_ticket_detail` (`id_booking_ticket_detail`, `pnr_number`, `id_customer`, `gender`, `birthday`, `name_class`, `price_class`, `last_name`, `name`, `nationality`, `Passport_number`, `Country_of_Issue`, `Passport Expiry Date`) 
+                    VALUES (NULL, '$pnr_number', '$id_customer', $gender, '$birthday', '$class_name', $sum_price, '$lastname', '$name', '$nationality', $Passport_number, '$Country_of_Issue', '$Passport_Expiry_Date')");
+                if ($insert_to_ticket&&$insert_to_detail) {
+                    header('location: booking_ticket.php?pnr_number='.$pnr_number);
                 }
                 else {
                     echo 'faij';
