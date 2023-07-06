@@ -14,6 +14,9 @@ if (isset($_POST['thoat'])) {
     // include "function.php";
     include_once "user.php";
     $airport = mysqli_query($conn, "SELECT * FROM `airport` WHERE 1");
+    $transaction = mysqli_query($conn, "SELECT transaction.id_transaction,transaction.pnr_number,
+    transaction.date_transaction,transaction.id_admin,transaction.sum_price,transaction.status FROM transaction, 
+    booking_ticket WHERE transaction.pnr_number=booking_ticket.pnr_number");
     $flight = mysqli_query($conn, "SELECT * FROM `flight` WHERE 1");
     $schedule = mysqli_query($conn, "SELECT a.id_airport as 'id di',b.id_airport as 'id den',s.id,s.time,s.sum_time,
     s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,
@@ -21,6 +24,7 @@ if (isset($_POST['thoat'])) {
       CROSS JOIN route r ON s.id_route=r.id_route
       CROSS JOIN airport a ON r.id_airport_go=a.id_airport
       CROSS JOIN airport b ON r.id_airport_come=b.id_airport");
+    $airline=mysqli_query($conn,"SELECT * FROM `airline` WHERE 1");
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -159,8 +163,8 @@ if (isset($_POST['thoat'])) {
             <input type="submit" value="Sân bay" class="input-side-bar" name="action">
             <input type="submit" value="chuyến bay" class="input-side-bar" name="action">
             <input type="submit" value="lịch trình bay" class="input-side-bar" name="action">
-            <input type="submit" value="Loại máy bay" class="input-side-bar">
-            <input type="submit" value="#" class="input-side-bar">
+            <input type="submit" value="Loại máy bay" class="input-side-bar"  name="action">
+            <input type="submit" value="Giao dịch" class="input-side-bar"  name="action">
           </div>
         </form>
         <span style="font-size:30px;cursor:pointer" class="button-side-bar" onclick="openNav()">&#9776;</span>
@@ -306,20 +310,66 @@ if (isset($_POST['thoat'])) {
                   </table>
               </table>
             </div>
-          <?php
-          case 'Loại máy bay': ?>
-            <div><a href="add-admin1.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <?php case 'Loại máy bay':
+      ?>
+            <div><a href="add-admin3.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
             <br>
             <hr>
             <div class="container">
+
               <table class="table">
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Loại máy bay</th>
+                    <th>Tên máy bay</th>
                   </tr>
                 </thead>
-                
+                <?php foreach ($airline as $a) { ?>
+                  <tr>
+
+                    <td><?php echo $a['id_airline']; ?></td>
+                    <td><?php echo $a['name_airline']; ?></td>
+                    <td><a href="edit-admin3.php?id=<?php echo $a['id_airline']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
+                    <td><a href="delete-admin3.php?id=<?php echo $a['id_airline']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
+
+                  </tr>
+                <?php }
+                break; ?>
+              </table>
+             <?php case 'Giao dịch':
+      ?>
+            <div><a href="add-admin4.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <br>
+            <hr>
+            <div class="container">
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Mã đặt chỗ</th>
+                    <th>Thời gian giao dịch</th>
+                    <th>Mã admin xử lí</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+                <?php foreach ($transaction as $k) { ?>
+                  <tr>
+
+                    <td><?php echo $k['id_transaction']; ?></td>
+                    <td><?php echo $k['pnr_number']; ?></td>
+                    <td><?php echo $k['date_transaction']; ?></td>
+                    <td><?php echo $k['id_admin']; ?></td>
+                    <td><?php echo $k['sum_price']; ?></td>
+                    <td><?php echo $k['status']; ?></td>
+                    <td><a href="edit-admin4.php?id=<?php echo $k['id_transaction']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
+                    <td><a href="delete-admin4.php?id=<?php echo $k['id_transaction']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
+
+                  </tr>
+                <?php }
+                break; ?>
+              </table>
       <?php
            default: 
             

@@ -3,7 +3,7 @@
 require_once "config.php";
 require_once "user.php";
 
-<<<<<<< HEAD
+
 $id = !empty($_GET['id']) ? (INT)$_GET['id'] : 0;
 $route=mysqli_query($conn,"SELECT r.id_route,a.id_airport,b.id_airport,a.name_airport AS 'name airport go',b.name_airport AS'name airport come' FROM `route` r
   CROSS JOIN airport a ON r.id_airport_go = a.id_airport
@@ -51,7 +51,8 @@ if(isset($_POST['submit'])){
     if(empty($gvip3)){
         $err[]="Không để trống Giá vé Phổ thông";
     }
-=======
+  }
+  
 $id = !empty($_GET['id']) ? (int)$_GET['id'] : 0;
 $airport= mysqli_query($conn,"SELECT * FROM airport WHERE id_airport=$id");
 foreach($airport as $a);
@@ -72,7 +73,7 @@ WHERE s.id=$id");
 // $t1=$t['id_airport_go'];
 // $t2=$t['id_airport_come'];
 
->>>>>>> 7c65d8ae7d243accc65c632db383858069f8b27f
+
 
 $kq = edit3($id);
 $err = [];
