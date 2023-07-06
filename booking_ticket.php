@@ -1,10 +1,18 @@
+<?php
+    include_once "header.php";
+    require_once "config.php";
+    $pnr_number=$_GET['pnr_number'];
+    $detail_ticket=mysqli_query($conn,"SELECT * FROM `booking_ticket_detail` WHERE pnr_number =$pnr_number");
+?>
 <style>
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-
+body{
+    background: whitesmoke;
+}
 .container{
     margin-left: 50%;
     transform: translateX(-50%);
@@ -52,6 +60,7 @@
 
 .mid{
     display: flex;
+    background: #fff;
 }
 
 .mid .left{
@@ -63,6 +72,12 @@
     flex: 0 20%;
     max-width: 20%;
 }
+.head{
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 </style>
 
 <div class="container">
@@ -80,20 +95,25 @@
         </div>
 
         <div class="left">
-            <table>
-                <th>
-                    <td>Name of passenger</td>
-                    <td>Carrier</td>
-                    <td>Flight Code</td>
-                    <td>Class</td>
-                </th>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            
+            <table class="head">
+                <thead>
+                    <tr>
+                        <th class="head">Name of passenger: </th>
+                        <th class="head">Carrier: </th>
+                        <th class="head">Flight no: </th>
+                        <th class="head">Class: </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($detail_ticket as $key) {?>
+                    <tr>
+                        <td class="head"><?php echo $key['last_name'].' '.$key['name']; ?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
             </table>
+            
         </div>
     </div>
 
@@ -101,3 +121,6 @@
 
     </div>
 </div>
+<?php
+    include_once "footer.php";
+?>

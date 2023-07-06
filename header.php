@@ -16,7 +16,7 @@ if (isset($_POST['signin']) && ($_POST['signin'])) {
     $role = checkuser($email, $password);
     $_SESSION['role'] = $role;
     $kq = getuserinfo($email, $password);
-    if ($role == 0) {
+    if ($role == 1) {
         $_SESSION['role'] = $role;
         $_SESSION['email'] = $kq[0]['email'];
         $_SESSION['username'] = $kq[0]['name_customer'];

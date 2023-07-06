@@ -39,6 +39,33 @@ function getuserinfo($email, $password)
     $kq = $abc->fetchAll();
     return $kq;
 }
+function infoschedule($id_schedule)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM schedule WHERE id =$id_schedule");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function infoid($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM customer WHERE id_customer=$id");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function infoclass($class)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM class WHERE id_class=$class");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
 function check_admin($email, $password)
 {   
     $conn = connectdb();
@@ -146,10 +173,7 @@ function edit3($id)
     return $kq;
 }
 
-function price($price_vip,$price_person){
-    $conn = connectdb();
-    $price=$price_vip + $price_person;
-}
+
 
 function id_airport($add)
 {
