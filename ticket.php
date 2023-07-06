@@ -1,6 +1,9 @@
 <?php 
     include_once "header.php";
     require_once "config.php";
+    //$id là id của schedu
+    $id=$_GET['id'];
+    echo $id;
 ?>
 <style>
     body{
