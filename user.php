@@ -69,6 +69,26 @@ function edit($id)
     return $kq;
 }
 
+function edit23($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM admin WHERE id_admin='" . $id . "'" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function edit24($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM booking_ticket WHERE pnr_number='" . $id . "'" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+
+
 function edit11($id)
 {
     $conn = connectdb();
@@ -82,6 +102,26 @@ function edi($id)
 {
     $conn = connectdb();
     $abc = $conn->prepare("SELECT * FROM transaction WHERE id_transaction='" . $id . "'" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function ed()
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT booking_ticket.pnr_number,booking_ticket.phone FROM booking_ticket, 
+    transaction WHERE booking_ticket.pnr_number=transaction.pnr_number" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+
+function e()
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT admin.id_admin,admin.name_admin FROM admin,transaction WHERE admin.id_admin=transaction.id_admin" );
     $abc->execute();
     $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $abc->fetchAll();
@@ -124,6 +164,15 @@ function id_airport_1($id)
 {
     $conn = connectdb();
     $abc = $conn->prepare("SELECT * FROM airport a  WHERE a.id_airport='" . $id . "'");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function id_admin_1($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM admin a  WHERE a.id_admin='" . $id . "'");
     $abc->execute();
     $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $abc->fetchAll();

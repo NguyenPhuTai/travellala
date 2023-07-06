@@ -25,6 +25,8 @@ if (isset($_POST['thoat'])) {
       CROSS JOIN airport a ON r.id_airport_go=a.id_airport
       CROSS JOIN airport b ON r.id_airport_come=b.id_airport");
     $airline=mysqli_query($conn,"SELECT * FROM `airline` WHERE 1");
+    $admin=mysqli_query($conn,"SELECT * FROM `admin` WHERE 1");
+    $booking=mysqli_query($conn,"SELECT * FROM `booking_ticket` WHERE 1");
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -165,6 +167,8 @@ if (isset($_POST['thoat'])) {
             <input type="submit" value="lịch trình bay" class="input-side-bar" name="action">
             <input type="submit" value="Loại máy bay" class="input-side-bar"  name="action">
             <input type="submit" value="Giao dịch" class="input-side-bar"  name="action">
+            <input type="submit" value="Admin" class="input-side-bar"  name="action">
+            <input type="submit" value="Booking_ticket" class="input-side-bar"  name="action">
           </div>
         </form>
         <span style="font-size:30px;cursor:pointer" class="button-side-bar" onclick="openNav()">&#9776;</span>
@@ -365,6 +369,77 @@ if (isset($_POST['thoat'])) {
                     <td><?php echo $k['status']; ?></td>
                     <td><a href="edit-admin4.php?id=<?php echo $k['id_transaction']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
                     <td><a href="delete-admin4.php?id=<?php echo $k['id_transaction']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
+
+                  </tr>
+                <?php }
+                break; ?>
+              </table>
+              <?php case 'Admin':
+      ?>
+            <div><a href="add-admin5.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <br>
+            <hr>
+            <div class="container">
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tên admin</th>
+                    <th>Email</th>
+                    <th>Password </th>
+                    <th>Role</th>
+                   
+                  </tr>
+                </thead>
+                <?php foreach ($admin as $a) { ?>
+                  <tr>
+
+                    <td><?php echo $a['id_admin']; ?></td>
+                    <td><?php echo $a['name_admin']; ?></td>
+                    <td><?php echo $a['email']; ?></td>
+                    <td><?php echo $a['password']; ?></td>
+                    <td><?php echo $a['role']; ?></td>
+                    <td><a href="edit-admin5.php?id=<?php echo $a['id_admin']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
+                    <td><a href="delete-admin5.php?id=<?php echo $a['id_admin']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
+
+                  </tr>
+                <?php }
+                break; ?>
+              </table>
+              <?php case 'Booking_ticket':
+      ?>
+            <div><a href="add-admin6.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
+            <br>
+            <hr>
+            <div class="container">
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Mã đặt chỗ</th>
+                    <th>ID Schedule</th>
+                    <th>Mã khách hàng</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Thời gian bay</th>
+                    <th>Status</th>
+                    
+                   
+                  </tr>
+                </thead>
+                <?php foreach ($booking as $b) { ?>
+                  <tr>
+
+                    <td><?php echo $b['pnr_number']; ?></td>
+                    <td><?php echo $b['id_schedule']; ?></td>
+                    <td><?php echo $b['id_customer']; ?></td>
+                    <td><?php echo $b['phone']; ?></td>
+                    <td><?php echo $b['email']; ?></td>
+                    <td><?php echo $b['time']; ?></td>
+                    <td><?php echo $b['status']; ?></td>
+                    <td><a href="edit-admin6.php?id=<?php echo $b['pnr_number']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
+                    <td><a href="delete-admin6.php?id=<?php echo $b['pnr_number']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
 
                   </tr>
                 <?php }
