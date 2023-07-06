@@ -69,6 +69,24 @@ function edit($id)
     return $kq;
 }
 
+function edit11($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM airline WHERE id_airline='" . $id . "'" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function edi($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM transaction WHERE id_transaction='" . $id . "'" );
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
 function edit1($id)
 {
     $conn = connectdb();
