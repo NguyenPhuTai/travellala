@@ -4,14 +4,24 @@
     require_once "user.php";
     $id=$_GET['id'];
     $sum_price=$_GET['sumprice'];
-    $schedule=mysqli_query($conn,"SELECT s.id,s.time,s.sum_time,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.id_airport AS'id airport go',a.name_airport AS'name airport go',a.code_airport AS 'code airport go',b.id_airport AS'id airport come',b.name_airport AS'name airport come',b.code_airport AS'code airport come' FROM `schedule` s
+    $schedule=mysqli_query($conn,"SELECT s.id,s.time,s.sum_time,s.id_flight,f.code_flight AS 'code_flight',l.name_airline,s.id_airline,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.id_airport AS'id airport go',a.name_airport AS'name airport go',a.code_airport AS 'code airport go',b.id_airport AS'id airport come',b.name_airport AS'name airport come',b.code_airport AS'code airport come' FROM `schedule` s
         CROSS JOIN route r ON s.id_route = r.id_route
         CROSS JOIN airport a ON r.id_airport_go = a.id_airport
         CROSS JOIN airport b ON r.id_airport_come =b.id_airport
+        CROSS JOIN airline l ON s.id_airline=l.id_airline
+        CROSS JOIN flight f ON f.id_flight= s.id_flight
         WHERE id=$id"); 
     $class=$_GET['class'];
     $getclassname=infoclass($class);
     $class_name=$getclassname[0]['name_class'];
+    $code_flight=0;
+    $name_airline;
+    foreach ($schedule as $key) {
+        if ($id==$key['id']) {
+            $code_flight=$key['code_flight'];
+            $name_airline=$key['name_airline'];
+        }
+    }
 ?>
 <style>
     body{
@@ -115,7 +125,7 @@
                 $insert_to_detail=mysqli_query($conn,"INSERT INTO `booking_ticket_detail` (`id_booking_ticket_detail`, `pnr_number`, `id_customer`, `gender`, `birthday`, `name_class`, `price_class`, `last_name`, `name`, `nationality`, `Passport_number`, `Country_of_Issue`, `Passport Expiry Date`) 
                     VALUES (NULL, '$pnr_number', '$id_customer', $gender, '$birthday', '$class_name', $sum_price, '$lastname', '$name', '$nationality', $Passport_number, '$Country_of_Issue', '$Passport_Expiry_Date')");
                 if ($insert_to_ticket&&$insert_to_detail) {
-                    header('location: booking_ticket.php?pnr_number='.$pnr_number);
+                    header('location: booking_ticket.php?pnr_number='.$pnr_number.'&class='.$class.'&codeflight='.$code_flight.'&nameairline='.$name_airline);
                 }
                 else {
                     echo 'faij';
