@@ -140,7 +140,7 @@
       CROSS JOIN flight f ON f.id_flight= s.id_flight
       WHERE r.id_airport_go=$airport_from 
       AND r.id_airport_come=$airport_to 
-      AND s.time HAVING '$date_from'");
+      AND s.time LIKE '$date_from %'");
     $priceclass=0;
     $priceperson=0;
 ?>
