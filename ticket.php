@@ -24,6 +24,12 @@
     }
 ?>
 <style>
+    .footer-bs{
+        position: absolute;
+        left: 0;
+        right: 0;
+        /* bottom: 0; */
+    }
     body{
         background: whitesmoke;
     }
@@ -58,8 +64,9 @@
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-evenly;
+        /* margin-bottom: 40%; */
     }
-    .left{
+    .left-box{
         flex: 70%;
         margin-left: 15%;
     }
@@ -87,7 +94,7 @@
     <p>Điền thông tin và xem lại đặt chỗ</p>
 </div>
 <div class="display">
-    <div class="container left">
+    <div class="container left-box">
         <?php if(!isset($_SESSION['username'])){?>
         <div class="signin">
             <div>
