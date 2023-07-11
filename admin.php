@@ -18,7 +18,7 @@ if (isset($_POST['thoat'])) {
     transaction.date_transaction,transaction.id_admin,transaction.sum_price,transaction.status FROM transaction, 
     booking_ticket WHERE transaction.pnr_number=booking_ticket.pnr_number");
     $flight = mysqli_query($conn, "SELECT * FROM `flight` WHERE 1");
-    $schedule = mysqli_query($conn, "SELECT a.id_airport as 'id di',b.id_airport as 'id den',s.id,s.time,s.sum_time,
+    $schedule = mysqli_query($conn, "SELECT s.id_flight,s.id_airline,a.id_airport as 'id di',b.id_airport as 'id den',s.id,s.time,s.sum_time,
     s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,
     s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',b.name_airport AS'san bay den' FROM schedule s 
       CROSS JOIN route r ON s.id_route=r.id_route
@@ -286,6 +286,8 @@ if (isset($_POST['thoat'])) {
                       <th>Airport đi</th>
                       <th>ID Airport đến</th>
                       <th>Airport đến</th>
+                      <th>ID Flight</th>
+                      <th>ID Airline</th>
                     </tr>
 
                     <?php foreach ($schedule as $key) { ?>
@@ -306,6 +308,8 @@ if (isset($_POST['thoat'])) {
                         <td><?php echo $key['san bay di']; ?></td>
                         <td><?php echo $key['id den']; ?></td>
                         <td><?php echo $key['san bay den']; ?></td>
+                        <td><?php echo $key['id_flight']; ?></td>
+                        <td><?php echo $key['id_airline']; ?></td>
                         <td><a href="edit-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-success">Sửa</button></a></td>
                         <td><a href="delete-admin2.php?id=<?php echo $key['id']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a></td>
                       </tr>

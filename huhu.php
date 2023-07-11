@@ -6,7 +6,7 @@ require_once "user.php";
 $id = !empty($_GET['id']) ? (int)$_GET['id'] : 0;
 $airport = mysqli_query($conn, "SELECT * FROM airport WHERE id_airport=$id");
 foreach ($airport as $a);
-$schedule = mysqli_query($conn, "SELECT s.id_flight,s.id_airline,a.id_airport as 'id di',b.id_airport as 'id den',s.id,s.time, a.name_airport,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,
+$schedule = mysqli_query($conn, "SELECT a.id_airport as 'id di',b.id_airport as 'id den',s.id,s.time, a.name_airport,s.sum_time,s.fix_number_vip_1,s.fix_number_vip_2,s.fix_number_vip_3,
 s.price_number_vip_1,s.price_number_vip_2,s.price_number_vip_3,s.price_adult,s.price_child,s.price_baby,a.name_airport AS'san bay di',
 b.name_airport AS'san bay den' FROM schedule s 
       CROSS JOIN route r ON s.id_route=r.id_route
@@ -14,7 +14,7 @@ b.name_airport AS'san bay den' FROM schedule s
       CROSS JOIN airport b ON r.id_airport_come=b.id_airport
       WHERE s.id=$id");
 foreach ($schedule as $s);
-$test = mysqli_query($conn, "SELECT s.id_flight,s.id_airline,s.id_route,s.id,r.id_airport_go,a.name_airport AS'san bay di',r.id_airport_come,b.name_airport AS'san bay den' FROM schedule s 
+$test = mysqli_query($conn, "SELECT s.id,r.id_airport_go,a.name_airport AS'san bay di',r.id_airport_come,b.name_airport AS'san bay den' FROM schedule s 
 CROSS JOIN route r ON s.id_route=r.id_route
 CROSS JOIN airport a ON r.id_airport_go=a.id_airport
 CROSS JOIN airport b ON r.id_airport_come=b.id_airport
@@ -22,15 +22,12 @@ WHERE s.id=$id");
 foreach ($test as $t);
 $t1 = $t['id_airport_go'];
 $t2 = $t['id_airport_come'];
-$t3 = $t['id_route'];
-$t4 = $t['id_flight'];
-$t5 = $t['id_airline'];
-echo $t4."+".$t5;
+
+
 $kq = edit3($id);
 $err = [];
 
 if (isset($_POST['submit'])) {
-
   $time = $_POST['time'];
   $sumtime = $_POST['sumtime'];
   $fixvip1 = $_POST['fixvip1'];
@@ -44,8 +41,7 @@ if (isset($_POST['submit'])) {
   $gl3 = $_POST['gl3'];
   $add1 = $_POST['add1'];
   $add2 = $_POST['add2'];
-  $add4 = $_POST['add4'];
-  $add5 = $_POST['add5'];
+
   if (empty($time)) {
     $err[] = "Không để trống Thời gian bay";
   }
@@ -70,6 +66,7 @@ if (isset($_POST['submit'])) {
   if (empty($gvip3)) {
     $err[] = "Không để trống Giá vé Phổ thông";
   }
+
   if (empty($gl1)) {
     $err[] = "Không để trống Giá vé Người lớn";
   }
@@ -78,37 +75,77 @@ if (isset($_POST['submit'])) {
   }
   if (empty($gl3)) {
     $err[] = "Không để trống Giá vé Em bé";
-  } 
-  if (empty($add1)) {
-    $err[] = "Không để trống Airport Đi";
   }
   if (empty($add2)) {
     $err[] = "Không để trống Airport Đến";
-  }
-  if (empty($add4)) {
-    $err[] = "Không để trống ID Flight";
-  }
-  if (empty($add5)) {
-    $err[] = "Không để trống ID Airline";
-  }
-  if (empty($err)) {
-    
-    $a = mysqli_query($conn, "UPDATE schedule SET time='$time', 
-    sum_time='$sumtime', fix_number_vip_1=$fixvip1,fix_number_vip_2=$fixvip2,
-    fix_number_vip_3=$fixvip3,price_number_vip_1=$gvip1,price_number_vip_2=$gvip2,
-    price_number_vip_3=$gvip3,price_adult=$gl1,price_child=$gl2,price_baby=$gl3 WHERE id=$id");
-   // $b=mysqli_query($conn,"UPDATE `route` SET `id_airport_go` = '$add1', `id_airport_come` = '$add2',`id_route` = '98' WHERE `route`.`id_route` = '$t3';");
-    
-    $c=mysqli_query($conn,"UPDATE `schedule` SET `id_airline` = '$add5' WHERE `schedule`.`id` = '$id';");
-    
-    $d=mysqli_query($conn,"UPDATE `schedule` SET `id_flight` = '$add4' WHERE `schedule`.`id` = '$id';");
-    header("Location: thanhcong.php");
   } else {
-   header("Location: thatbai.php"); 
-   
+    //lấy thông tin trước khi xóa
+    $before_add = id_airport_1($add2);
+    $name_add = $before_add[0]['name_airport'];
+    $id_add = $before_add[0]['id_airport'];
+    $city_add = $before_add[0]['city'];
+    $code_add = $before_add[0]['code_airport'];
+    //
+    $si = $s['id den'];
+
+    $before_add = id_airport_1($si);
+    $name_add1 = $before_add[0]['name_airport'];
+    $id_add1 = $before_add[0]['id_airport'];
+    $city_add1 = $before_add[0]['city'];
+    $code_add1 = $before_add[0]['code_airport'];
+    //xóa trước khi update
+    $b0 = mysqli_query($conn, "DELETE FROM airport  WHERE id_airport=$id_add");
+    // $b update bị trùng id khóa chính
+    $b = mysqli_query($conn, "UPDATE airport a SET a.id_airport=$id_add,a.name_airport='$name_add',a.city='$city_add',a.code_airport='$code_add'
+     where a.id_airport=$si ");
+    //khi đó thằng đầu tiên sẽ biến mất, thay vào đó là thông tin $b
+    //thì phải thêm lại thằng đầu tiên để database không thiếu
+
+    $b1 = mysqli_query($conn, "INSERT INTO airport(name_airport,id_airport,city,code_airport)
+     VALUES ('$name_add1', $id_add1,'$city_add1','$code_add1')");
+  }
+  if (empty($add1)) { //$add1 la` id
+    $err[] = "Không để trống Airport Đi";
+  } else {
+    //lấy thông tin trước khi xóa
+    $before_add = id_airport_1($add1);
+    $name_add = $before_add[0]['name_airport'];
+    $id_add = $before_add[0]['id_airport'];
+    $city_add = $before_add[0]['city'];
+    $code_add = $before_add[0]['code_airport'];
+    //
+    $sid = $s['id di'];
+
+    $before_add = id_airport_1($sid);
+    $name_add1 = $before_add[0]['name_airport'];
+    $id_add1 = $before_add[0]['id_airport'];
+    $city_add1 = $before_add[0]['city'];
+    $code_add1 = $before_add[0]['code_airport'];
+    //xóa trước khi update
+    $b0 = mysqli_query($conn, "DELETE FROM airport  WHERE id_airport=$id_add");
+    // $b update bị trùng id khóa chính
+    $b = mysqli_query($conn, "UPDATE airport a SET a.id_airport=$id_add,a.name_airport='$name_add',a.city='$city_add',a.code_airport='$code_add'
+     where a.id_airport=$sid ");
+    //khi đó thằng đầu tiên sẽ biến mất, thay vào đó là thông tin $b
+    //thì phải thêm lại thằng đầu tiên để database không thiếu
+
+    $b1 = mysqli_query($conn, "INSERT INTO airport(name_airport,id_airport,city,code_airport)
+     VALUES ('$name_add1', $id_add1,'$city_add1','$code_add1')");
   }
 
- 
+  if (empty($err)) {
+    $a = mysqli_query($conn, "UPDATE schedule SET time='$time', sum_time='$sumtime', fix_number_vip_1=$fixvip1,fix_number_vip_2=$fixvip2,fix_number_vip_3=$fixvip3,price_number_vip_1=$gvip1,price_number_vip_2=$gvip2,price_number_vip_3=$gvip3,price_adult=$gl1,price_child=$gl2,price_baby=$gl3 WHERE id=$id");
+  }
+  // if($a){
+  //   echo "a ok";
+  // }
+
+
+  if ($a && $b) {
+    header("Location: thanhcong.php");
+  } else {
+    header("Location: thatbai.php");
+  }
 }
 
 
@@ -191,6 +228,8 @@ if (isset($_POST['submit'])) {
   <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Airport Đến</label>
     <br>
+    <!-- <input name="add1" type="text" class="form-control" placeholder="Airport Đến" value="<?php $s['san bay den']; ?>">
+  </div> -->
     <select id="class" name="add2">
       <option value="<?php echo $t2; ?>"><?php echo $s['id den'] . ' - ' .  $s['san bay den']; ?></option>
       <?php
@@ -203,39 +242,54 @@ if (isset($_POST['submit'])) {
       <?php endforeach; ?>
     </select>
   </div>
-  <div class="mb-3">
-    <label for="disabledTextInput" class="form-label">ID Flight</label>
-    <br>
-    <select id="class" name="add4">
-      <option value="<?php echo $t4; ?>"><?php echo $s['id_flight'];?></option>
-      <?php
-
-      $sql = "SELECT * FROM flight";
-
-      $result = mysqli_query($conn, $sql);
-      foreach ($result as $class) : ?>
-        <option value="<?php echo $class['id_flight']; ?>"><?php echo $class['id_flight'] . ' - ' . $class['code_flight']; ?></option>
-      <?php endforeach; ?>
-    </select>
-  </div>
-  <div class="mb-3">
-    <label for="disabledTextInput" class="form-label">ID Airline</label>
-    <br>
-    <select id="class" name="add5">
-      <option value="<?php echo $t5; ?>"><?php echo $s['id_airline'];?></option>
-      <?php
-
-      $sql = "SELECT * FROM airline";
-
-      $result = mysqli_query($conn, $sql);
-      foreach ($result as $class) : ?>
-        <option value="<?php echo $class['id_airline']; ?>"><?php echo $class['id_airline'] . ' - ' . $class['name_airline']; ?></option>
-      <?php endforeach; ?>
-    </select>
-  </div>
-
 
   <br>
   <button name="submit" type="submit" class="btn btn-primary">Submit</button>
 
 </form>
+
+
+
+
+
+
+
+
+//lấy thông tin trước khi xóa
+    $before_add = id_flight_1($add4);
+    $id_flight = $before_add[0]['id_flight'];
+    $img = $before_add[0]['img'];
+    $type_air = $before_add[0]['type_air'];
+    $code_flight = $before_add[0]['code_flight'];
+    $number_vip_1	 = $before_add[0]['number_vip_1'];
+    $number_vip_2	 = $before_add[0]['number_vip_2'];
+    $number_vip_3 = $before_add[0]['number_vip_3'];
+
+    //
+    $sid = $s['id_flight'];
+
+    $before_add = id_flight_1($sid);
+    $id_flight1 = $before_add[0]['id_flight'];
+    $img1 = $before_add[0]['img'];
+    $type_air1 = $before_add[0]['type_air'];
+    $code_flight1 = $before_add[0]['code_flight'];
+    $number_vip_11	 = $before_add[0]['number_vip_1'];
+    $number_vip_21	 = $before_add[0]['number_vip_2'];
+    $number_vip_31 = $before_add[0]['number_vip_3'];
+    //xóa trước khi update
+    $b0 = mysqli_query($conn, "DELETE FROM flight  WHERE id_flight=$id_flight");
+    // $b update bị trùng id khóa chính
+    $b = mysqli_query($conn, "UPDATE flight a SET a.id_flight=$id_flight
+    ,a.img='$img',a.type_air='$type_air',a.code_flight='$code_flight',a.number_vip_1='$number_vip_1',
+    a.number_vip_2='$number_vip_2',a.number_vip_3='$number_vip_3'
+     where a.id_flight=$sid ");
+    //khi đó thằng đầu tiên sẽ biến mất, thay vào đó là thông tin $b
+    //thì phải thêm lại thằng đầu tiên để database không thiếu
+
+    $b1 = mysqli_query($conn, "INSERT INTO flight(id_flight,img,type_air,code_flight,number_vip_1,number_vip_2,number_vip_3)
+     VALUES ('$id_flight1','$img1' ,'$type_air1','$code_flight1','$number_vip_11','$number_vip_21','$number_vip_31')");
+
+
+
+
+

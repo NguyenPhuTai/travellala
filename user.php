@@ -193,6 +193,15 @@ function id_airport_1($id)
     $kq = $abc->fetchAll();
     return $kq;
 }
+function id_flight_1($id)
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT * FROM flight a  WHERE a.id_flight='" . $id . "'");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
 function id_admin_1($id)
 {
     $conn = connectdb();
@@ -212,10 +221,23 @@ function airport()
     return $kq;
 }
 
-function route()
+function max_id()
 {
     $conn = connectdb();
-    $abc = $conn->prepare("SELECT * FROM route Where id_route=(SELECT (MAX)id_route as LastID FROM route ) ");
+    $abc = $conn->prepare("SELECT  id_route
+    FROM route
+    WHERE id_route = (SELECT MAX(id_route) FROM route) ");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}
+function max_id1()
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT  id_flight
+    FROM route
+    WHERE id_flight = (SELECT MAX(id_flight) FROM flight) ");
     $abc->execute();
     $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $abc->fetchAll();
