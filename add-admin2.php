@@ -3,9 +3,11 @@
 require_once "config.php";
 require_once "user.php";
 
+$id = !empty($_GET['id']) ? (int)$_GET['id'] : 0;
 $err = [];
 
 if (isset($_POST['submit'])) {
+
   $time = $_POST['time'];
   $sumtime = $_POST['sumtime'];
   $fixvip1 = $_POST['fixvip1'];
@@ -21,7 +23,6 @@ if (isset($_POST['submit'])) {
   $add2 = $_POST['add2'];
   $add4 = $_POST['add4'];
   $add5 = $_POST['add5'];
-
   if (empty($time)) {
     $err[] = "Không để trống Thời gian bay";
   }
@@ -68,20 +69,22 @@ if (isset($_POST['submit'])) {
     $err[] = "Không để trống ID Airline";
   }
   if (empty($err)) {
-    $b=mysqli_query($conn,"INSERT INTO route(id_airport_go,id_airport_come) VALUES('$add1','$add2' )");
-    $maxid=max_id();
-    $max=$maxid[0]['id_route'];
-
-    $b1=mysqli_query($conn,"INSERT INTO route(id_flight) VALUES('$add4')");
-    $maxid1=max_id1();
-    $max1=$maxid1[0]['id_flight'];
-
-    $a=mysqli_query($conn,"INSERT INTO schedule(time,sum_time, fix_number_vip_1,fix_number_vip_2,fix_number_vip_3,price_number_vip_1,price_number_vip_2,price_number_vip_3,price_adult,price_child,price_baby,id_route,id_flight) VALUES ('$time','$sumtime',$fixvip1,$fixvip2,$fixvip3,$gvip1,$gvip2,$gvip3,$gl1,$gl2,$gl3,$max,$max1)");
+    $them_moi=mysqli_query($conn,"INSERT INTO `route` (`id_route`, `id_airport_go`, `id_airport_come`) VALUES (NULL, '$add1', '$add2');");
+    $idmax=max_id2();
+    $idmax2=$idmax[0]['id_route'];
+    $a = mysqli_query($conn, "INSERT INTO `schedule` (`id`, `time`, `sum_time`, 
+    `fix_number_vip_1`, `fix_number_vip_2`, `fix_number_vip_3`, `price_number_vip_1`, 
+    `price_number_vip_2`, `price_number_vip_3`, `price_adult`, `price_child`, `price_baby`,
+     `id_route`, `id_flight`, `id_airline`) VALUES (NULL, '$time', '$sumtime', '$fixvip1', '$fixvip2', '$fixvip3',
+      '$gvip1', '$gvip2', '$gvip3', '$gl1', '$gl2', '$gl3', '$idmax2', '$add4', '$add5');");
 
     header("Location: thanhcong.php");
   } else {
-    header("Location: thatbai.php");
+   header("Location: thatbai.php"); 
+   
   }
+
+ 
 }
 
 
@@ -100,7 +103,7 @@ if (isset($_POST['submit'])) {
 <link rel="short icon" href="photo/logo3.png">
 <form method="POST">
 
-  <legend>Thêm mới thông tin</legend>
+  <legend>Chỉnh sửa thông tin</legend>
   <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Thời gian</label>
     <input name="time" type="datetime-local" class="form-control" placeholder="Thời gian" >
@@ -127,15 +130,15 @@ if (isset($_POST['submit'])) {
   </div>
   <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Giá ghế hạng Phổ thông đặc biệt</label>
-    <input name="gvip2" type="text" class="form-control" placeholder="Giá ghế hạng Phổ thông đặc biệt" >
+    <input name="gvip2" type="text" class="form-control" placeholder="Giá ghế hạng Phổ thông đặc biệt">
   </div>
   <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Giá ghế hạng Phổ thông</label>
-    <input name="gvip3" type="text" class="form-control" placeholder="Giá ghế hạng Phổ thông">
+    <input name="gvip3" type="text" class="form-control" placeholder="Giá ghế hạng Phổ thông" >
   </div>
   <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Giá vé Người lớn</label>
-    <input name="gl1" type="text" class="form-control" placeholder="Giá vé Người lớn">
+    <input name="gl1" type="text" class="form-control" placeholder="Giá vé Người lớn" >
   </div>
   <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Giá vé trẻ em</label>
@@ -143,11 +146,12 @@ if (isset($_POST['submit'])) {
   </div>
   <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Giá vé em bé</label>
-    <input name="gl3" type="text" class="form-control" placeholder="Giá vé em bé">
+    <input name="gl3" type="text" class="form-control" placeholder="Giá vé em bé" >
   </div>
   <div class="mb-3">
     <label for="disabledTextInput" class="form-label">Airport Đi</label>
     <br>
+
     <select id="class" name="add1">
       <option value="">--Chọn--</option>
       <?php
@@ -207,8 +211,6 @@ if (isset($_POST['submit'])) {
   </div>
 
 
-  <br>
-  <button name="submit" type="submit" class="btn btn-primary">Submit</button>
   <br>
   <button name="submit" type="submit" class="btn btn-primary">Submit</button>
 

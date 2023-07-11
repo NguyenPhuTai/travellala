@@ -163,9 +163,9 @@ if (isset($_POST['thoat'])) {
           <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <input type="submit" value="Sân bay" class="input-side-bar" name="action">
-            <input type="submit" value="chuyến bay" class="input-side-bar" name="action">
-            <input type="submit" value="lịch trình bay" class="input-side-bar" name="action">
-            <input type="submit" value="Loại máy bay" class="input-side-bar"  name="action">
+            <input type="submit" value="Máy bay" class="input-side-bar" name="action">
+            <input type="submit" value="Lịch trình bay" class="input-side-bar" name="action">
+            <input type="submit" value="Hãng bay" class="input-side-bar"  name="action">
             <input type="submit" value="Giao dịch" class="input-side-bar"  name="action">
             <input type="submit" value="Admin" class="input-side-bar"  name="action">
             <input type="submit" value="Booking_ticket" class="input-side-bar"  name="action">
@@ -224,7 +224,7 @@ if (isset($_POST['thoat'])) {
               </table>
             </div>
           <?php
-          case 'chuyến bay': ?>
+          case 'Máy bay': ?>
             <div><a href="add-admin1.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
             <br>
             <hr>
@@ -262,7 +262,7 @@ if (isset($_POST['thoat'])) {
                 $stt++;
                 break; ?>
               <?php
-            case 'lịch trình bay': ?>
+            case 'Lịch trình bay': ?>
                 <div><a href="add-admin2.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
                 <br>
                 <hr>
@@ -318,7 +318,7 @@ if (isset($_POST['thoat'])) {
                   </table>
               </table>
             </div>
-            <?php case 'Loại máy bay':
+            <?php case 'Hãng bay':
       ?>
             <div><a href="add-admin3.php"> <button type="button" class="btn btn-warning">Thêm mới</button></a></div>
             <br>

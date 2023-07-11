@@ -4,12 +4,14 @@ require_once "config.php";
 require_once "user.php";
 
 $id = !empty($_GET['id']) ? (INT)$_GET['id'] : 0;
+$booking = mysqli_query($conn, "SELECT * FROM `booking_ticket` WHERE pnr_number=$id");
+foreach ($booking as $s);
 
 $kq=edit24($id);
 $err=[];
 if(isset($_POST['submit'])){
-    $ids=$_POST['ids'];
-    $idc=$_POST['idc'];
+    $id1=$_POST['id1'];
+    $id2=$_POST['id2'];
     $phone=$_POST['phone'];
     $email=$_POST['email'];
     $time=$_POST['time'];
@@ -28,7 +30,7 @@ if(isset($_POST['submit'])){
     // if(empty($role)){
     //     $err[]="Không để trống Trạng thái";
     // }
-    $a=mysqli_query($conn,"UPDATE booking_ticket SET id_schedule='$ids', id_customer='$idc',phone ='$phone',email='$email',time='$time',status='$status'
+    $a=mysqli_query($conn,"UPDATE booking_ticket SET id_schedule='$id1', id_customer='$id2',phone ='$phone',email='$email',time='$time',status='$status'
      WHERE pnr_number=$id");
     if(empty($err)){
        
@@ -57,15 +59,39 @@ if(isset($_POST['submit'])){
 <form method="POST">
  
     <legend>Chỉnh sửa thông tin</legend>
+
     <div class="mb-3">
-      <label for="disabledTextInput" class="form-label">ID Schedule</label>
-      <input name="ids" type="text" class="form-control" placeholder="ID Schedule" value="<?php echo $kq[0]['id_schedule'] ?>">
-    </div>
-    <div class="mb-3">
-      <label for="disabledTextInput" class="form-label">Mã khách hàng</label>
-      <input name="idc" type="text"  class="form-control" placeholder="Mã khách hàng" value="<?php echo $kq[0]['id_customer']; ?> ">
-    </div>
-    <div class="mb-3">
+    <label for="disabledTextInput" class="form-label">ID Schedule</label>
+    <br>
+    <select id="class" name="id1">
+      <option value="<?php echo $s['id_schedule']; ?>"><?php echo $s['id_schedule']; ?></option>
+      <?php
+
+      $sql = "SELECT * FROM schedule";
+
+      $result = mysqli_query($conn, $sql);
+      foreach ($result as $class) : ?>
+        <option value="<?php echo $class['id']; ?>"><?php echo $class['id'] . ' - ' . $class['sum_time']; ?></option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="disabledTextInput" class="form-label">ID Customer</label>
+    <br>
+    <select id="class" name="id2">
+      <option value="<?php echo $s['id_customer']; ?>"><?php echo $s['id_customer']; ?></option>
+      <?php
+
+      $sql = "SELECT * FROM customer";
+
+      $result = mysqli_query($conn, $sql);
+      foreach ($result as $class) : ?>
+        <option value="<?php echo $class['id_customer']; ?>"><?php echo $class['id_customer'] . ' - ' . $class['name_customer']; ?></option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+
       <label for="disabledTextInput" class="form-label">Số điện thoại</label>
       <input name="phone" type="text"  class="form-control" placeholder="Số điện thoại" value="<?php echo $kq[0]['phone'] ?>">
     </div>

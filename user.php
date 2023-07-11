@@ -243,3 +243,14 @@ function max_id1()
     $kq = $abc->fetchAll();
     return $kq;
 }
+function max_id2()
+{
+    $conn = connectdb();
+    $abc = $conn->prepare("SELECT  id_route
+    FROM route
+    WHERE id_route = (SELECT MAX(id_route) FROM route) ");
+    $abc->execute();
+    $result = $abc->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $abc->fetchAll();
+    return $kq;
+}

@@ -25,7 +25,7 @@ $t2 = $t['id_airport_come'];
 $t3 = $t['id_route'];
 $t4 = $t['id_flight'];
 $t5 = $t['id_airline'];
-echo $t4."+".$t5;
+
 $kq = edit3($id);
 $err = [];
 
@@ -92,11 +92,13 @@ if (isset($_POST['submit'])) {
     $err[] = "Không để trống ID Airline";
   }
   if (empty($err)) {
-    
+    $them_moi=mysqli_query($conn,"INSERT INTO `route` (`id_route`, `id_airport_go`, `id_airport_come`) VALUES (NULL, '$add1', '$add2');");
+    $idmax=max_id2();
+    $idmax2=$idmax[0]['id_route'];
     $a = mysqli_query($conn, "UPDATE schedule SET time='$time', 
     sum_time='$sumtime', fix_number_vip_1=$fixvip1,fix_number_vip_2=$fixvip2,
     fix_number_vip_3=$fixvip3,price_number_vip_1=$gvip1,price_number_vip_2=$gvip2,
-    price_number_vip_3=$gvip3,price_adult=$gl1,price_child=$gl2,price_baby=$gl3 WHERE id=$id");
+    price_number_vip_3=$gvip3,price_adult=$gl1,price_child=$gl2,price_baby=$gl3,id_route=$idmax2 WHERE id=$id");
    // $b=mysqli_query($conn,"UPDATE `route` SET `id_airport_go` = '$add1', `id_airport_come` = '$add2',`id_route` = '98' WHERE `route`.`id_route` = '$t3';");
     
     $c=mysqli_query($conn,"UPDATE `schedule` SET `id_airline` = '$add5' WHERE `schedule`.`id` = '$id';");
